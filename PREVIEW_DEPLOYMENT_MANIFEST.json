@@ -1,12 +1,17 @@
 {
   "asset": "AH Personal Website",
   "owner": "Ahmed Hassouna",
-  "version": "v1.0 RC4.2 — Preview Deployment Package",
-  "status": "Approved Preview Baseline — Noindex / Not Production",
+  "version": "v1.0 RC4.4 — Approved Handover Baseline",
+  "release": "RC4.4",
+  "status": "Approved Handover Baseline — Protected / Current Approved Baseline",
   "date": "2026-07-14",
-  "repository_name_planned": "ahmed-hassouna-website",
+  "repository_name": "ahmed-hassouna-website",
+  "source_commit": "3b6841377276fc82c80fee2c69015e73ae497532",
   "publishing_source": "main / root",
   "search_indexing": "disabled for preview",
+  "hash_algorithm": "SHA-256",
+  "manifest_scope": "Website runtime, content, and media files; control manifests excluded to avoid recursive hashing.",
+  "file_count": 29,
   "files": [
     {
       "path": ".nojekyll",
@@ -20,23 +25,23 @@
     },
     {
       "path": "README.md",
-      "size": 565,
-      "sha256": "59d098248cb6ec42da656ac0e88f6e9629c545b40a44034893c16232daeb69d4"
+      "size": 1176,
+      "sha256": "2e2f63e97cba8cc45b484b685edbef1cce53e9b6a6dd1d2355ff0a145b52263d"
     },
     {
       "path": "articles/business-logic-before-tools.html",
-      "size": 8804,
-      "sha256": "8d91c57ddd3edb3bedc5a012b95bb49ccf39733c6e3933f5b21a626c73033583"
+      "size": 10353,
+      "sha256": "8c8bf38773205e88178dbc47dd2f740fb070c83ce79314493b8043340fd524cc"
     },
     {
       "path": "articles/erp-ownership.html",
-      "size": 8579,
-      "sha256": "6b12e2413536e9bb93442875b324f8472ef38e9d98abf87ed486712b3a43669a"
+      "size": 10128,
+      "sha256": "b79fe58dc2efb3004e595c5f15a2527b632392c81445a7a62e58e18a5e5b5e4f"
     },
     {
       "path": "articles/measuring-reality.html",
-      "size": 8756,
-      "sha256": "be5ba36b79e2881ad03ee70d0264049a323e881e01a696d87f107c8a820525dd"
+      "size": 10305,
+      "sha256": "93bae4438e516993b419154193d75babab3bbfd19782fc244f5f8ba1310d4926"
     },
     {
       "path": "assets/ah-monogram.svg",
@@ -89,6 +94,16 @@
       "sha256": "abdc490b7b096e6700255ea121a5d944059d084c5168e3c40bd13cb72eea1d18"
     },
     {
+      "path": "assets/rc4-3.css",
+      "size": 5634,
+      "sha256": "d6e487f5929bf4a3736848e41d767158de3c95cfb110add979581c143900c021"
+    },
+    {
+      "path": "assets/rc4-4.css",
+      "size": 3059,
+      "sha256": "07f2d046be1a70bffbb4d446b07a0c778ab78ec100f7e433ed75fa93247dbef7"
+    },
+    {
       "path": "assets/rm003.css",
       "size": 17732,
       "sha256": "6224e88d5f43898847d5a65951393b7458388bd81cfd8b716a204116b07c3ce4"
@@ -105,8 +120,33 @@
     },
     {
       "path": "index.html",
-      "size": 25575,
-      "sha256": "4ef29a08e06c31996e5cf464978fa12d9328df2fa77ff91b6fd5c61c345bdc0d"
+      "size": 28113,
+      "sha256": "e33231c270e34421e5c117dd4e2fb5e973c6ed838aa13a74cac9c51c77500aca"
+    },
+    {
+      "path": "projects/azora-transformation.html",
+      "size": 14746,
+      "sha256": "78f028fce21c9a91e9e33cccd059c0b2d4de5f2822158c365291d49d0701695e"
+    },
+    {
+      "path": "projects/operational-knowledge.html",
+      "size": 14214,
+      "sha256": "b20806bc1f0beb3cebc9411586828c85806e11d4566aac86bbae955ce1c838c1"
+    },
+    {
+      "path": "projects/production-capacity.html",
+      "size": 14401,
+      "sha256": "b7a082447c50e1ba35cf72b1866d0766ee273507626f5e17c7f3e048ff0f0217"
+    },
+    {
+      "path": "projects/quality-prevention.html",
+      "size": 14487,
+      "sha256": "7f19d44b274a849cb9681733e3b0a8157c3fcd1a485050b310b636e3910273d6"
+    },
+    {
+      "path": "projects/warehouse-governance.html",
+      "size": 14231,
+      "sha256": "28e4a7bea8a31016015a5587b76af9fd022e184536666616d63926ddc8a9422c"
     },
     {
       "path": "robots.txt",
@@ -119,8 +159,6 @@
       "sha256": "4f4a8b346aafe7bcba0e82e8d620992d4a2059b0c8575997229d3656502aa0d0"
     }
   ],
-  "release": "RC4.4",
-  "change": "Project cards open five dedicated bilingual project-detail pages",
   "project_pages": [
     "projects/production-capacity.html",
     "projects/warehouse-governance.html",
@@ -128,7 +166,13 @@
     "projects/azora-transformation.html",
     "projects/operational-knowledge.html"
   ],
-  "baseline_source": "RC4.3 Live Preview Baseline",
+  "article_pages": [
+    "articles/business-logic-before-tools.html",
+    "articles/erp-ownership.html",
+    "articles/measuring-reality.html"
+  ],
+  "baseline_source": "RC4.4 Approved Handover Baseline",
+  "change": "RC4.4 inner-pages navigation and brand consistency approved handover baseline.",
   "changes": [
     "Actual AH monogram restored on project and article pages",
     "Explicit Back to Home control added to inner pages",
@@ -136,5 +180,13 @@
     "Inner-page footers unified",
     "Arabic/English and RTL/LTR state preserved"
   ],
-  "generated_at_utc": "2026-07-14T13:06:31.498698+00:00"
+  "normalization": {
+    "phase": "Phase 1 — Safe Development Branch",
+    "scope": "Manifest metadata and file inventory normalization only",
+    "content_design_files_changed": false,
+    "previous_manifest_version": "v1.0 RC4.2 — Preview Deployment Package",
+    "corrected_legacy_hash_count": 5,
+    "added_missing_file_count": 7
+  },
+  "generated_at_utc": "2026-07-14T16:31:05.046969+00:00"
 }
