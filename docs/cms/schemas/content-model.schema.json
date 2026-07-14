@@ -1,0 +1,630 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ahmed-hassouna.example.invalid/schemas/content-model-v1.json",
+  "title": "AH Website CMS Content Model v1.0 — Non-Runtime Design Schema",
+  "description": "Phase 2 design schema only. Not connected to the current build.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/project"
+    },
+    {
+      "$ref": "#/$defs/article"
+    }
+  ],
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "required": [
+        "ar",
+        "en"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ar": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "under_review",
+        "published",
+        "archived"
+      ]
+    },
+    "translationState": {
+      "type": "string",
+      "enum": [
+        "incomplete",
+        "ready_for_review",
+        "approved"
+      ]
+    },
+    "media": {
+      "type": "object",
+      "required": [
+        "src",
+        "type",
+        "decorative"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "src": {
+          "type": "string",
+          "pattern": "^assets/[a-z0-9/_-]+\\.(webp|jpg|jpeg|png|svg)$"
+        },
+        "type": {
+          "const": "image"
+        },
+        "alt": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "caption": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "credit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "decorative": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decorative": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "alt"
+            ]
+          }
+        }
+      ]
+    },
+    "seo": {
+      "type": "object",
+      "required": [
+        "title",
+        "description",
+        "canonical_path"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "canonical_path": {
+          "type": "string",
+          "pattern": "^/(projects|articles)/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
+        },
+        "og_image": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^assets/[a-z0-9/_-]+\\.(webp|jpg|jpeg|png|svg)$"
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "claim_type",
+        "text",
+        "evidence_refs",
+        "approval_state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9-]+$"
+        },
+        "claim_type": {
+          "type": "string",
+          "enum": [
+            "qualitative",
+            "quantitative",
+            "status",
+            "credential",
+            "scope"
+          ]
+        },
+        "text": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "boundary": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "approval_state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "verified",
+            "baseline_approved",
+            "approved",
+            "rejected"
+          ]
+        },
+        "approved_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approved_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "claim_type": {
+                "enum": [
+                  "quantitative",
+                  "status",
+                  "credential"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "content_review_state",
+        "claim_review_state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "content_review_state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "claim_review_state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "reviewed_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "content_type",
+        "status",
+        "slug",
+        "order",
+        "owner",
+        "languages",
+        "translation_state",
+        "seo",
+        "review"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "content_type": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner": {
+          "const": "Ahmed Hassouna"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ar",
+              "en"
+            ]
+          },
+          "contains": {
+            "const": "ar"
+          },
+          "minContains": 1,
+          "allOf": [
+            {
+              "contains": {
+                "const": "en"
+              },
+              "minContains": 1
+            }
+          ],
+          "uniqueItems": true
+        },
+        "translation_state": {
+          "$ref": "#/$defs/translationState"
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "seo": {
+          "$ref": "#/$defs/seo"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        }
+      }
+    },
+    "project": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "project_id",
+            "featured",
+            "title",
+            "summary",
+            "organization",
+            "period",
+            "category",
+            "status_label",
+            "built_capability",
+            "context",
+            "method",
+            "evidence",
+            "media"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {},
+            "content_type": {
+              "const": "project"
+            },
+            "status": {},
+            "slug": {},
+            "order": {},
+            "owner": {},
+            "languages": {},
+            "translation_state": {},
+            "created_at": {},
+            "updated_at": {},
+            "seo": {},
+            "claims": {},
+            "review": {},
+            "project_id": {
+              "type": "string",
+              "pattern": "^AH-PRJ-[0-9]{3}$"
+            },
+            "featured": {
+              "type": "boolean"
+            },
+            "title": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "summary": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "organization": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "minLength": 1
+            },
+            "category": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "status_label": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "built_capability": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "context": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "method": {
+              "type": "object",
+              "required": [
+                "diagnosis",
+                "design",
+                "stabilization"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "diagnosis": {
+                  "$ref": "#/$defs/localizedText"
+                },
+                "design": {
+                  "$ref": "#/$defs/localizedText"
+                },
+                "stabilization": {
+                  "$ref": "#/$defs/localizedText"
+                }
+              }
+            },
+            "evidence": {
+              "type": "object",
+              "required": [
+                "evidence_basis",
+                "documented_impact",
+                "claim_boundaries",
+                "transferable_value"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "evidence_basis": {
+                  "$ref": "#/$defs/localizedText"
+                },
+                "documented_impact": {
+                  "$ref": "#/$defs/localizedText"
+                },
+                "claim_boundaries": {
+                  "$ref": "#/$defs/localizedText"
+                },
+                "transferable_value": {
+                  "$ref": "#/$defs/localizedText"
+                }
+              }
+            },
+            "media": {
+              "type": "object",
+              "required": [
+                "thumbnail",
+                "cover",
+                "gallery"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "thumbnail": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/media"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "cover": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/media"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "gallery": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/media"
+                  },
+                  "maxItems": 12
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "articleSection": {
+      "type": "object",
+      "required": [
+        "section_id",
+        "order",
+        "heading",
+        "body"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "section_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "heading": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "body": {
+          "$ref": "#/$defs/localizedText"
+        }
+      }
+    },
+    "article": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "article_id",
+            "title",
+            "summary",
+            "lead",
+            "sections",
+            "author",
+            "media"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {},
+            "content_type": {
+              "const": "article"
+            },
+            "status": {},
+            "slug": {},
+            "order": {},
+            "owner": {},
+            "languages": {},
+            "translation_state": {},
+            "created_at": {},
+            "updated_at": {},
+            "seo": {},
+            "claims": {},
+            "review": {},
+            "article_id": {
+              "type": "string",
+              "pattern": "^AH-ART-[0-9]{3}$"
+            },
+            "title": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "summary": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "lead": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/articleSection"
+              },
+              "minItems": 1
+            },
+            "author": {
+              "const": "Ahmed Hassouna"
+            },
+            "published_at": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "media": {
+              "type": "object",
+              "required": [
+                "cover",
+                "gallery"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "cover": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/media"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "gallery": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/media"
+                  },
+                  "maxItems": 12
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
