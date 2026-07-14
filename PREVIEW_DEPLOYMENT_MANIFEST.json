@@ -118,5 +118,14 @@
       "size": 359,
       "sha256": "4f4a8b346aafe7bcba0e82e8d620992d4a2059b0c8575997229d3656502aa0d0"
     }
+  ],
+  "release": "RC4.3",
+  "change": "Project cards open five dedicated bilingual project-detail pages",
+  "project_pages": [
+    "projects/production-capacity.html",
+    "projects/warehouse-governance.html",
+    "projects/quality-prevention.html",
+    "projects/azora-transformation.html",
+    "projects/operational-knowledge.html"
   ]
 }

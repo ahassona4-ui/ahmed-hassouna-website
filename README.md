@@ -16,3 +16,8 @@ GitHub Pages publishing source: `main` branch, `/(root)` folder.
 ## Owner
 
 Ahmed Hassouna — Operations & Business Systems Consultant
+
+## RC4.3 Project Details
+- Five project cards now open dedicated bilingual project pages.
+- Project pages preserve the selected AR/EN language through local storage.
+- Content follows the approved Modular Project Catalog and claim boundaries.
