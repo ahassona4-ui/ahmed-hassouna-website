@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title desc">
+  <title id="title">AH monogram</title>
+  <desc id="desc">Ahmed Hassouna monogram in deep navy and restrained gold.</desc>
+  <rect width="180" height="180" rx="14" fill="#ffffff"/>
+  <g fill="none" stroke-linecap="square">
+    <path d="M24 66V24h49M107 24h49v42M24 114v42h49M107 156h49v-42" stroke="#C69A44" stroke-width="6"/>
+    <path d="M90 24v132" stroke="#D7B66F" stroke-width="1.5" opacity=".55"/>
+  </g>
+  <circle cx="90" cy="24" r="6" fill="#C69A44" stroke="#fff" stroke-width="3"/>
+  <circle cx="90" cy="156" r="6" fill="#102A43" stroke="#fff" stroke-width="3"/>
+  <text x="31" y="128" font-family="Georgia, 'Times New Roman', serif" font-size="105" fill="#102A43">A</text>
+  <text x="82" y="127" font-family="Georgia, 'Times New Roman', serif" font-size="100" fill="#102A43">H</text>
+  <path d="M69 86h43" stroke="#C69A44" stroke-width="11" opacity=".92"/>
+</svg>

@@ -1,0 +1,141 @@
+/* RC4.2 — Language Direction & Dark Header Alignment
+   Governed by AH Personal Brand Book: Deep Navy leads, White clarifies, Controlled Gold directs. */
+
+/* Dark authority header — shared across homepage, articles, and 404. */
+body .site-header{
+  background:rgba(16,42,67,.97)!important;
+  border-bottom:1px solid rgba(198,161,91,.34)!important;
+  box-shadow:0 10px 32px rgba(7,27,45,.18)!important;
+  color:#fff;
+}
+body .site-header .nav-wrap{direction:inherit!important}
+body.rtl .site-header .nav-wrap{direction:rtl!important}
+body.ltr .site-header .nav-wrap{direction:ltr!important}
+body .site-header .brand{color:#fff!important}
+body .site-header .brand-mark{
+  background-color:#fff!important;
+  color:#102A43!important;
+  border-color:rgba(198,161,91,.72)!important;
+  box-shadow:none!important;
+}
+body .site-header .brand-text{line-height:1.3;text-align:start}
+body .site-header .brand-text strong{color:#fff!important;display:block}
+body .site-header .brand-text small{color:#C6A15B!important;display:block}
+body .site-header .nav-links{direction:inherit!important}
+body.rtl .site-header .nav-links{direction:rtl!important;text-align:right}
+body.ltr .site-header .nav-links{direction:ltr!important;text-align:left}
+body .site-header .nav-links a{color:#E8EEF3!important}
+body .site-header .nav-links a:hover,
+body .site-header .nav-links a:focus-visible,
+body .site-header .nav-links a.active{color:#fff!important}
+body .site-header .nav-links a::after{background:#C6A15B!important}
+body .site-header .lang-btn,
+body .site-header .menu-btn{
+  background:transparent!important;
+  border:1px solid rgba(198,161,91,.62)!important;
+  color:#fff!important;
+  border-radius:8px!important;
+}
+body .site-header .lang-btn:hover,
+body .site-header .lang-btn:focus-visible,
+body .site-header .menu-btn:hover,
+body .site-header .menu-btn:focus-visible{
+  background:#C6A15B!important;
+  color:#102A43!important;
+}
+body .site-header .nav-actions{direction:ltr}
+
+/* True language mirroring: Arabic flows RTL; English flows LTR. */
+.rm003.rtl .nav-wrap,.rm003.rtl .hero-layout{direction:rtl!important}
+.rm003.ltr .nav-wrap,.rm003.ltr .hero-layout{direction:ltr!important}
+.rm003 .hero-content{direction:inherit!important;text-align:start!important;padding:70px 0 68px!important;padding-inline-end:72px!important}
+.rm003 .home-hero::after{left:auto!important;inset-inline-start:54%!important}
+.rm003.rtl .home-hero::after{transform:skewX(14deg)!important}
+.rm003.ltr .home-hero::after{transform:skewX(-14deg)!important}
+.rm003 .hero-actions{justify-content:flex-start}
+.rm003.rtl .hero-actions{direction:rtl}
+.rm003.ltr .hero-actions{direction:ltr}
+
+/* Active-language identity: the selected language is dominant, alternate name is discreet. */
+.rm003 .hero-alt-name{
+  margin:0 0 8px;
+  color:#C6A15B;
+  font:500 clamp(1.1rem,2vw,1.65rem)/1.25 Georgia,"Times New Roman",serif;
+  letter-spacing:.025em;
+}
+.rm003.rtl .hero-alt-name{direction:ltr;text-align:right}
+.rm003.ltr .hero-alt-name{direction:rtl;text-align:left;font-family:"Segoe UI",Tahoma,Arial,sans-serif;letter-spacing:0}
+.rm003 .home-hero h1{max-width:100%;overflow-wrap:anywhere}
+.rm003.rtl .home-hero h1{
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  font-size:clamp(3.7rem,7vw,7rem);
+  font-weight:850;
+  letter-spacing:0;
+}
+.rm003.ltr .home-hero h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(3.15rem,6.1vw,6.15rem);
+  font-weight:600;
+  letter-spacing:.01em;
+  line-height:1.02;
+}
+.rm003 .hero-title{
+  margin:14px 0 0;
+  color:#102A43;
+  font-size:clamp(1.15rem,2vw,1.62rem);
+  font-weight:750;
+  line-height:1.5;
+}
+.rm003.ltr .hero-title{font-family:Georgia,"Times New Roman",serif;font-weight:600}
+.rm003 .hero-tagline{
+  margin:0;
+  color:#102A43;
+  font-size:1.02rem;
+  font-weight:700;
+  line-height:1.75;
+  max-width:690px;
+}
+.rm003.ltr .hero-tagline{font-family:Georgia,"Times New Roman",serif;font-weight:600}
+.rm003 .alternate-label{color:#627D98!important;font-size:.78rem!important;font-weight:700!important;margin-top:2px!important}
+.rm003.rtl .alternate-label{direction:ltr;text-align:right}
+.rm003.ltr .alternate-label{direction:rtl;text-align:left}
+
+/* Keep the approved capability rule: English name first, Arabic name second. */
+.rm003 .capability-card{direction:ltr!important;text-align:center!important}
+.rm003 .capability-card h3{direction:ltr!important;text-align:center!important}
+.rm003 .capability-card .cap-ar{direction:rtl!important;text-align:center!important}
+.rm003.rtl .capability-card small{direction:rtl;text-align:right}
+.rm003.ltr .capability-card small{direction:ltr;text-align:left}
+
+/* Full section/card flow follows selected language. */
+.rm003.rtl .pillars-grid,.rm003.rtl .method-grid,.rm003.rtl .knowledge-grid,.rm003.rtl .secondary-capabilities{direction:rtl!important}
+.rm003.ltr .pillars-grid,.rm003.ltr .method-grid,.rm003.ltr .knowledge-grid,.rm003.ltr .secondary-capabilities{direction:ltr!important}
+.rm003.rtl .pillar,.rm003.rtl .method-step,.rm003.rtl .knowledge-card{text-align:right!important;direction:rtl!important}
+.rm003.ltr .pillar,.rm003.ltr .method-step,.rm003.ltr .knowledge-card{text-align:left!important;direction:ltr!important}
+.rm003.rtl .compact-heading,.rm003.rtl .contact-card,.rm003.rtl .positioning-inner,.rm003.rtl .footer-main,.rm003.rtl .footer-bottom{text-align:right;direction:rtl}
+.rm003.ltr .compact-heading,.rm003.ltr .contact-card,.rm003.ltr .positioning-inner,.rm003.ltr .footer-main,.rm003.ltr .footer-bottom{text-align:left;direction:ltr}
+
+/* Article/404 direction follows selected language too. */
+body.rtl .article-shell,body.rtl .article-body,body.rtl .footer-wrap{text-align:right;direction:rtl}
+body.ltr .article-shell,body.ltr .article-body,body.ltr .footer-wrap{text-align:left;direction:ltr}
+
+@media (max-width:980px){
+  body .site-header .nav-links.open{
+    background:#102A43!important;
+    border-top:1px solid rgba(198,161,91,.28)!important;
+    box-shadow:0 18px 30px rgba(7,27,45,.22)!important;
+  }
+  body.rtl .site-header .nav-links.open{text-align:right!important}
+  body.ltr .site-header .nav-links.open{text-align:left!important}
+  .rm003 .hero-content{padding:60px 0 38px!important}
+}
+@media (max-width:720px){
+  .rm003 .hero-content{padding:48px 0 34px!important}
+  .rm003.rtl .home-hero h1{font-size:clamp(3.15rem,17vw,5rem)}
+  .rm003.ltr .home-hero h1{font-size:clamp(2.55rem,13vw,4.5rem)}
+}
+
+/* English identity stays strong and readable without an awkward desktop wrap. */
+@media (min-width:981px){
+  .rm003.ltr .home-hero h1{font-size:clamp(3rem,5.15vw,5rem);white-space:nowrap}
+}
