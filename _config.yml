@@ -1,0 +1,25 @@
+title: "Ahmed Hassouna — Operations & Business Systems Consultant"
+url: "https://ahassona4-ui.github.io"
+baseurl: "/ahmed-hassouna-website"
+lang: "ar"
+direction: "rtl"
+encoding: "utf-8"
+markdown: kramdown
+highlighter: rouge
+safe: true
+strict_front_matter: true
+future: false
+unpublished: false
+keep_files: []
+exclude:
+  - docs
+  - vendor
+  - .bundle
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - FILE_HASH_MANIFEST.json
+  - PREVIEW_DEPLOYMENT_MANIFEST.json
+  - PACKAGE_FILE_HASHES.json
+defaults: []
