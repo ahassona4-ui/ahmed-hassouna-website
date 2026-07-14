@@ -1,0 +1,51 @@
+/* RC4.4 — Inner Pages Navigation & Brand Consistency
+   Keeps the approved Deep Navy / White / Controlled Gold identity on project and article pages. */
+
+/* Use the actual AH SVG instead of an empty decorative placeholder. */
+body .site-header .brand-logo{
+  width:58px;height:58px;flex:0 0 58px;display:block;object-fit:contain;
+  border:1px solid rgba(198,161,91,.72);border-radius:12px;background:#fff;
+}
+
+/* Explicit return control on every inner page. */
+.inner-page-toolbar{background:#F3F6F8;border-bottom:1px solid rgba(16,42,67,.08)}
+.inner-page-toolbar .container{display:flex;align-items:center;padding-top:12px;padding-bottom:12px}
+.inner-home-link{
+  display:inline-flex;align-items:center;gap:9px;min-height:42px;padding:9px 14px;
+  border:1px solid rgba(16,42,67,.16);border-radius:8px;background:#fff;
+  color:#102A43;text-decoration:none;font-weight:800;box-shadow:0 6px 18px rgba(16,42,67,.05)
+}
+.inner-home-link:hover,.inner-home-link:focus-visible{border-color:#C6A15B;color:#8A6421;outline:none}
+.home-icon{font-size:1.22rem;line-height:1;color:#C6A15B}
+body.rtl .inner-page-toolbar .container{justify-content:flex-start}
+body.ltr .inner-page-toolbar .container{justify-content:flex-start}
+
+/* Shared inner-page footer. */
+.inner-footer{background:#102A43;color:#fff;padding:34px 0 18px;border-top:2px solid #C6A15B}
+.inner-footer .footer-main{display:flex;align-items:center;justify-content:space-between;gap:28px;padding-bottom:22px}
+.inner-footer .footer-brand{display:flex;align-items:center;gap:14px}
+.inner-footer .footer-brand img{border-radius:10px;background:#fff;border:1px solid rgba(198,161,91,.7)}
+.inner-footer .footer-brand strong{display:block;color:#fff}
+.inner-footer .footer-brand span{display:block;color:#C6A15B;font-size:.78rem;margin-top:3px}
+.inner-footer p{margin:0;color:#E8EEF3;font-weight:700}
+.inner-footer .footer-bottom{display:flex;justify-content:space-between;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:.78rem;color:#B8C7D3}
+
+/* Article layout alignment with the current project/header system. */
+.article-page .nav-links a.active::after,.project-page .nav-links a.active::after{transform:scaleX(1)}
+.article-page .article-hero{padding-top:56px}
+.article-page .back-link{margin-inline-end:12px}
+.article-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:30px}
+.article-actions .back-link{margin-top:0}
+.article-actions .home-secondary{
+  display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border-radius:999px;
+  border:1px solid rgba(16,42,67,.15);background:#fff;color:#102A43;font-weight:900;text-decoration:none
+}
+.article-actions .home-secondary:hover,.article-actions .home-secondary:focus-visible{border-color:#C6A15B;color:#8A6421}
+
+@media (max-width:980px){
+  body .site-header .brand-logo{width:50px;height:50px;flex-basis:50px}
+}
+@media (max-width:720px){
+  .inner-footer .footer-main,.inner-footer .footer-bottom{align-items:flex-start;flex-direction:column}
+  .inner-home-link{width:100%;justify-content:center}
+}

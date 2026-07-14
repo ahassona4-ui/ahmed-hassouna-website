@@ -21,3 +21,12 @@ Ahmed Hassouna — Operations & Business Systems Consultant
 - Five project cards now open dedicated bilingual project pages.
 - Project pages preserve the selected AR/EN language through local storage.
 - Content follows the approved Modular Project Catalog and claim boundaries.
+
+
+## RC4.4 Inner Pages Navigation & Brand Consistency
+
+- Restored the actual AH monogram on project and article headers.
+- Added an explicit Back to Home control to every inner page.
+- Unified project and article navigation/header structure.
+- Unified inner-page footer branding.
+- Preserved Arabic/English language state and RTL/LTR direction through local storage.

@@ -119,7 +119,7 @@
       "sha256": "4f4a8b346aafe7bcba0e82e8d620992d4a2059b0c8575997229d3656502aa0d0"
     }
   ],
-  "release": "RC4.3",
+  "release": "RC4.4",
   "change": "Project cards open five dedicated bilingual project-detail pages",
   "project_pages": [
     "projects/production-capacity.html",
@@ -127,5 +127,14 @@
     "projects/quality-prevention.html",
     "projects/azora-transformation.html",
     "projects/operational-knowledge.html"
-  ]
+  ],
+  "baseline_source": "RC4.3 Live Preview Baseline",
+  "changes": [
+    "Actual AH monogram restored on project and article pages",
+    "Explicit Back to Home control added to inner pages",
+    "Project and article headers/navigation unified",
+    "Inner-page footers unified",
+    "Arabic/English and RTL/LTR state preserved"
+  ],
+  "generated_at_utc": "2026-07-14T13:06:31.498698+00:00"
 }
