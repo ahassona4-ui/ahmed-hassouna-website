@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      BUNDLE_PATH: ${{ runner.temp }}/bundle
       BUNDLE_JOBS: "4"
       BUNDLE_RETRY: "3"
 
@@ -62,6 +61,11 @@ jobs:
         run: |
           set -euo pipefail
           ruby -e 'abort "Unexpected Ruby version" unless RUBY_VERSION == "3.3.4"'
+      - name: Configure temporary Bundler path
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "BUNDLE_PATH=${RUNNER_TEMP}/bundle" >> "$GITHUB_ENV"
 
       - name: Record environment
         shell: bash
