@@ -1,0 +1,231 @@
+name: CMS Phase 3 Isolated Build Verification
+
+'on':
+  push:
+    branches:
+      - cms-development-rc4.4
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cms-phase3-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-verify:
+    name: Build and verify Phase 3 templates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      BUNDLE_PATH: ${{ runner.temp }}/bundle
+      BUNDLE_JOBS: "4"
+      BUNDLE_RETRY: "3"
+
+    steps:
+      - name: Fetch exact public commit without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_dir="${GITHUB_WORKSPACE}/source"
+          rm -rf "${source_dir}"
+          git init "${source_dir}"
+          git -C "${source_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${source_dir}" -c protocol.version=2 fetch --no-tags --depth=1 origin "${GITHUB_SHA}"
+          git -C "${source_dir}" checkout --detach FETCH_HEAD
+          test "$(git -C "${source_dir}" rev-parse HEAD)" = "${GITHUB_SHA}"
+          printf 'SOURCE_DIR=%s\n' "${source_dir}" >> "${GITHUB_ENV}"
+
+      - name: Prepare isolated workspace and logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          work_dir="${RUNNER_TEMP}/cms-phase3-workspace"
+          rm -rf "${work_dir}"
+          mkdir -p "${work_dir}"
+          cp -a "${SOURCE_DIR}/." "${work_dir}/"
+          mkdir -p "${work_dir}/build-logs"
+          for log in environment bundle-install jekyll-build static-verification source-integrity; do
+            : > "${work_dir}/build-logs/${log}.log"
+          done
+          printf 'WORK_DIR=%s\n' "${work_dir}" >> "${GITHUB_ENV}"
+
+      - name: Set up GitHub Pages-compatible Ruby
+        uses: ruby/setup-ruby@8e41b362d2589a22a44c1cfa214b3c83052c195b
+        with:
+          ruby-version: "3.3.4"
+          bundler: default
+          bundler-cache: false
+
+      - name: Assert exact Ruby runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          ruby -e 'abort "Unexpected Ruby version" unless RUBY_VERSION == "3.3.4"'
+
+      - name: Record environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo "Commit: ${GITHUB_SHA}"
+            ruby --version
+            gem --version
+            bundle --version
+          } 2>&1 | tee "${WORK_DIR}/build-logs/environment.log"
+
+      - name: Install Gemfile dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${WORK_DIR}"
+          bundle install 2>&1 | tee build-logs/bundle-install.log
+
+      - name: Build isolated Jekyll output
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${WORK_DIR}"
+          bundle exec jekyll build --baseurl "" --destination _site_phase3 2>&1 | tee build-logs/jekyll-build.log
+
+      - name: Verify generated output
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${WORK_DIR}"
+          python3 - <<'PY' 2>&1 | tee build-logs/static-verification.log
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+          import hashlib, html, sys
+
+          site = Path("_site_phase3").resolve()
+          project = site / "dev-preview/project-ah-prj-001.html"
+          article = site / "dev-preview/article-ah-art-001.html"
+          required = [project, article]
+          checks, errors = [], []
+
+          def check(ok, label):
+              checks.append(label)
+              if not ok:
+                  errors.append(label)
+
+          for path in required:
+              check(path.is_file(), f"exists: {path.relative_to(site)}")
+              check(path.is_file() and path.stat().st_size > 0, f"non-empty: {path.relative_to(site)}")
+
+          if errors:
+              for label in errors:
+                  print(f"FAIL: {label}")
+              sys.exit(1)
+
+          ptxt = project.read_text(encoding="utf-8")
+          atxt = article.read_text(encoding="utf-8")
+
+          for path, text in ((project, ptxt), (article, atxt)):
+              rel = path.relative_to(site)
+              check("<html" in text and "</html>" in text, f"HTML skeleton: {rel}")
+              check('lang="ar"' in text and 'dir="rtl"' in text, f"Arabic RTL: {rel}")
+              check("data-ar=" in text and "data-en=" in text, f"bilingual data: {rel}")
+              check("Ahmed Hassouna" in text and "أحمد حسونة" in text, f"identity: {rel}")
+              check("main.js" in text, f"approved JS reference: {rel}")
+              check("{{" not in text and "{%" not in text, f"no unresolved Liquid: {rel}")
+
+          check("AH-PRJ-001" in ptxt, "project ID")
+          check("/projects/operational-knowledge.html" in ptxt, "circular previous AH-PRJ-005")
+          check("/projects/warehouse-governance.html" in ptxt, "circular next AH-PRJ-002")
+          check("44.3%" in ptxt and "11.8%" in ptxt, "approved claim text")
+          check('data-legacy-date-pending="true"' in atxt, "legacy date marker")
+          check("Why Business Logic Must Come Before the Tool" in atxt, "English article title")
+          check("لماذا يسبق منطق العمل الأداة؟" in atxt, "Arabic article title")
+          check("<time" not in atxt.lower(), "no invented date element")
+
+          class Collector(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.refs = []
+              def handle_starttag(self, tag, attrs):
+                  for name, value in attrs:
+                      if name in {"href", "src"} and value:
+                          self.refs.append((tag, name, value))
+
+          def target_for(page, raw):
+              value = html.unescape(raw.strip())
+              parsed = urlsplit(value)
+              if parsed.scheme in {"http", "https", "mailto", "tel", "data", "javascript"}:
+                  return None
+              if value.startswith("#") or not parsed.path:
+                  return None
+              clean = unquote(parsed.path)
+              target = site / clean.lstrip("/") if clean.startswith("/") else page.parent / clean
+              target = target.resolve()
+              target.relative_to(site)
+              return target / "index.html" if target.is_dir() else target
+
+          broken, count = [], 0
+          for page in required:
+              parser = Collector()
+              parser.feed(page.read_text(encoding="utf-8"))
+              for tag, name, raw in parser.refs:
+                  target = target_for(page, raw)
+                  if target is None:
+                      continue
+                  count += 1
+                  if not target.exists():
+                      broken.append(f"{page.relative_to(site)}: {tag}[{name}]={raw}")
+
+          check(count > 0, "local references inspected")
+          check(not broken, "local references resolve")
+
+          files = sorted(path for path in site.rglob("*") if path.is_file())
+          Path("build-logs/generated-files.txt").write_text(
+              "\n".join(str(path.relative_to(site)) for path in files) + "\n",
+              encoding="utf-8",
+          )
+          with Path("build-logs/generated-preview-sha256.txt").open("w", encoding="utf-8") as handle:
+              for path in required:
+                  handle.write(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.relative_to(site)}\n")
+
+          for label in checks:
+              print(f"{'FAIL' if label in errors else 'PASS'}: {label}")
+          print(f"Generated files: {len(files)}")
+          print(f"Inspected local references: {count}")
+          print(f"Checks: {len(checks)}")
+          print(f"Failures: {len(errors)}")
+          if broken:
+              print("Broken references:")
+              for item in broken:
+                  print(f"- {item}")
+          if errors:
+              sys.exit(1)
+          PY
+
+      - name: Verify source checkout remained unchanged
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(git -C "${SOURCE_DIR}" status --porcelain --untracked-files=all)"
+          {
+            echo "Source commit: $(git -C "${SOURCE_DIR}" rev-parse HEAD)"
+            if [[ -n "${status}" ]]; then
+              echo "Source checkout changes detected:"
+              printf '%s\n' "${status}"
+            else
+              echo "Source checkout unchanged."
+            fi
+          } 2>&1 | tee "${WORK_DIR}/build-logs/source-integrity.log"
+          test -z "${status}"
+
+      - name: Upload build output and verification logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cms-phase3-build-${{ github.sha }}
+          path: |
+            ${{ env.WORK_DIR }}/_site_phase3
+            ${{ env.WORK_DIR }}/build-logs
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 6
+          include-hidden-files: false
