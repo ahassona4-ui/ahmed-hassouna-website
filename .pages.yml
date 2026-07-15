@@ -1,0 +1,611 @@
+# AH Website Pages CMS — Phase 5A preparation only.
+# This file is not connected or uploaded. Branch and app permissions require a later gate.
+media:
+  - name: project_uploads
+    label: Project uploads
+    input: assets/uploads/projects
+    output: /assets/uploads/projects
+    extensions: [webp, jpg, jpeg, png, svg]
+    categories: [image]
+    rename: safe
+  - name: article_uploads
+    label: Article uploads
+    input: assets/uploads/articles
+    output: /assets/uploads/articles
+    extensions: [webp, jpg, jpeg, png, svg]
+    categories: [image]
+    rename: safe
+
+settings:
+  hide: true
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      create: "content(create): {path}"
+      update: "content(update): {path}"
+      delete: "content(delete): {path}"
+      rename: "content(rename): {oldPath} -> {newPath}"
+
+components:
+  localized_string:
+    type: object
+    fields:
+      - name: ar
+        label: Arabic
+        type: string
+        required: true
+      - name: en
+        label: English
+        type: string
+        required: true
+
+  localized_text:
+    type: object
+    fields:
+      - name: ar
+        label: Arabic
+        type: text
+        required: true
+      - name: en
+        label: English
+        type: text
+        required: true
+
+  localized_optional_string:
+    type: object
+    fields:
+      - name: ar
+        label: Arabic
+        type: string
+      - name: en
+        label: English
+        type: string
+
+  review:
+    type: object
+    fields:
+      - name: content_review_state
+        label: Content review state
+        type: select
+        required: true
+        options:
+          values:
+            - name: pending
+              label: Pending
+            - name: approved
+              label: Approved
+            - name: rejected
+              label: Rejected
+      - name: claim_review_state
+        label: Claim review state
+        type: select
+        required: true
+        options:
+          values:
+            - name: pending
+              label: Pending
+            - name: approved
+              label: Approved
+            - name: rejected
+              label: Rejected
+      - name: reviewed_by
+        label: Reviewed by
+        type: string
+      - name: reviewed_at
+        label: Reviewed at
+        type: date
+        default: ""
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssXXX"
+      - name: notes
+        label: Review notes
+        type: text
+
+  claim:
+    type: object
+    fields:
+      - name: claim_id
+        label: Claim ID
+        type: string
+        required: true
+        pattern: "^[A-Z0-9-]+$"
+      - name: claim_type
+        label: Claim type
+        type: select
+        required: true
+        options:
+          values:
+            - name: qualitative
+              label: Qualitative
+            - name: quantitative
+              label: Quantitative
+            - name: status
+              label: Status
+            - name: credential
+              label: Credential
+            - name: scope
+              label: Scope
+      - name: text
+        label: Claim text
+        component: localized_text
+        required: true
+      - name: evidence_refs
+        label: Evidence references
+        type: string
+        list: true
+      - name: boundary
+        label: Claim boundary
+        component: localized_text
+      - name: approval_state
+        label: Approval state
+        type: select
+        required: true
+        options:
+          values:
+            - name: pending
+              label: Pending
+            - name: verified
+              label: Verified
+            - name: baseline_approved
+              label: Baseline approved
+            - name: approved
+              label: Approved
+            - name: rejected
+              label: Rejected
+      - name: approved_by
+        label: Approved by
+        type: string
+      - name: approved_at
+        label: Approved at
+        type: date
+        default: ""
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssXXX"
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: _projects
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{project_id}.md"
+      field: false
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [project_id, title.en, status, order, featured]
+      primary: project_id
+      sort: [order, project_id]
+      search: [project_id, title.ar, title.en, organization]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: project_id
+        label: Project ID
+        type: string
+        required: true
+        readonly: true
+        pattern:
+          regex: "^AH-PRJ-[0-9]{3}$"
+          message: "Project ID must use AH-PRJ-###."
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+        readonly: true
+        pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      - name: permalink
+        label: Approved permalink
+        type: string
+        required: true
+        readonly: true
+        pattern: "^/projects/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+      - name: status
+        label: Status
+        type: select
+        required: true
+        options:
+          values:
+            - name: draft
+              label: Draft
+            - name: under_review
+              label: Under Review
+            - name: published
+              label: Published
+            - name: archived
+              label: Archived
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        options:
+          min: 1
+      - name: featured
+        label: Featured
+        type: boolean
+        required: true
+      - name: translation_state
+        label: Translation state
+        type: select
+        required: true
+        options:
+          values:
+            - name: incomplete
+              label: Incomplete
+            - name: ready_for_review
+              label: Ready for review
+            - name: approved
+              label: Approved
+      - name: organization
+        label: Organization
+        type: string
+        required: true
+      - name: period
+        label: Period
+        type: string
+        required: true
+      - name: card_title
+        label: Card title
+        type: string
+        required: true
+      - name: category
+        label: Category
+        component: localized_string
+        required: true
+      - name: status_label
+        label: Public status label
+        component: localized_string
+        required: true
+      - name: title
+        label: Title
+        component: localized_string
+        required: true
+      - name: summary
+        label: Summary
+        component: localized_text
+        required: true
+      - name: built_capability
+        label: Built capability
+        component: localized_text
+        required: true
+      - name: context
+        label: Context
+        component: localized_text
+        required: true
+      - name: method
+        label: Method
+        type: object
+        required: true
+        fields:
+          - name: diagnosis
+            label: Diagnosis
+            component: localized_text
+            required: true
+          - name: design
+            label: Design
+            component: localized_text
+            required: true
+          - name: stabilization
+            label: Stabilization
+            component: localized_text
+            required: true
+      - name: evidence
+        label: Evidence and impact
+        type: object
+        required: true
+        fields:
+          - name: evidence_basis
+            label: Evidence basis
+            component: localized_text
+            required: true
+          - name: documented_impact
+            label: Documented impact
+            component: localized_text
+            required: true
+          - name: claim_boundaries
+            label: Claim boundaries
+            component: localized_text
+            required: true
+          - name: transferable_value
+            label: Transferable value
+            component: localized_text
+            required: true
+      - name: media
+        label: Project media
+        type: object
+        required: true
+        fields:
+          - name: src
+            label: Approved existing project visual
+            type: string
+            readonly: true
+          - name: decorative
+            label: Existing visual is decorative
+            type: boolean
+            readonly: true
+          - name: alt
+            label: Existing visual alt text
+            component: localized_optional_string
+          - name: cover
+            label: Optional cover image
+            type: image
+            options:
+              media: project_uploads
+              extensions: [webp, jpg, jpeg, png, svg]
+              rename: safe
+          - name: gallery
+            label: Optional gallery
+            type: image
+            options:
+              media: project_uploads
+              multiple:
+                max: 12
+              unique: true
+              extensions: [webp, jpg, jpeg, png, svg]
+              rename: safe
+      - name: navigation
+        label: Circular project navigation
+        type: object
+        readonly: true
+        fields:
+          - name: previous
+            type: object
+            fields:
+              - name: path
+                type: string
+              - name: project_id
+                type: string
+          - name: back
+            type: object
+            fields:
+              - name: path
+                type: string
+              - name: fragment
+                type: string
+          - name: next
+            type: object
+            fields:
+              - name: path
+                type: string
+              - name: project_id
+                type: string
+      - name: claims
+        label: Structured claims and evidence references
+        component: claim
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{claim_id} — {claim_type}"
+      - name: seo
+        label: SEO
+        type: object
+        required: true
+        fields:
+          - name: title
+            label: SEO title
+            component: localized_string
+            required: true
+          - name: description
+            label: SEO description
+            component: localized_text
+            required: true
+          - name: canonical_path
+            label: Canonical path
+            type: string
+            required: true
+            readonly: true
+          - name: og_image
+            label: Sharing image
+            type: image
+            options:
+              media: project_uploads
+              extensions: [webp, jpg, jpeg, png]
+              rename: safe
+      - name: review
+        label: Review
+        component: review
+        required: true
+
+  - name: articles
+    label: Articles
+    type: collection
+    path: _articles
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{article_id}.md"
+      field: false
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [article_id, title.en, status, order, legacy_date_pending]
+      primary: article_id
+      sort: [order, article_id]
+      search: [article_id, title.ar, title.en, category]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: article_id
+        label: Article ID
+        type: string
+        required: true
+        readonly: true
+        pattern:
+          regex: "^AH-ART-[0-9]{3}$"
+          message: "Article ID must use AH-ART-###."
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+        readonly: true
+        pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      - name: permalink
+        label: Approved permalink
+        type: string
+        required: true
+        readonly: true
+        pattern: "^/articles/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+      - name: status
+        label: Status
+        type: select
+        required: true
+        options:
+          values:
+            - name: draft
+              label: Draft
+            - name: under_review
+              label: Under Review
+            - name: published
+              label: Published
+            - name: archived
+              label: Archived
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        options:
+          min: 1
+      - name: published_at
+        label: Publication date
+        type: date
+        default: ""
+        description: "Leave empty unless an approved publication date exists. Do not invent dates."
+        options:
+          format: yyyy-MM-dd
+      - name: legacy_date_pending
+        label: Legacy date pending
+        type: boolean
+        required: true
+        readonly: true
+      - name: translation_state
+        label: Translation state
+        type: select
+        required: true
+        options:
+          values:
+            - name: incomplete
+              label: Incomplete
+            - name: ready_for_review
+              label: Ready for review
+            - name: approved
+              label: Approved
+      - name: category
+        label: Category
+        type: string
+        required: true
+      - name: title
+        label: Title
+        component: localized_string
+        required: true
+      - name: summary
+        label: Summary
+        component: localized_text
+        required: true
+      - name: lead
+        label: Lead
+        component: localized_text
+        required: true
+      - name: sections
+        label: Ordered sections
+        type: object
+        required: true
+        list:
+          min: 1
+          max: 20
+          collapsible:
+            collapsed: true
+            summary: "{order}. {section_id}"
+        fields:
+          - name: section_id
+            label: Section ID
+            type: string
+            required: true
+            readonly: true
+            pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - name: order
+            label: Section order
+            type: number
+            required: true
+            options:
+              min: 1
+          - name: heading
+            label: Heading
+            component: localized_string
+            required: true
+          - name: body
+            label: Body
+            component: localized_text
+            required: true
+      - name: quote
+        label: Quote
+        component: localized_text
+      - name: media
+        label: Article media
+        type: object
+        required: true
+        fields:
+          - name: cover
+            label: Cover image
+            type: image
+            options:
+              media: article_uploads
+              extensions: [webp, jpg, jpeg, png, svg]
+              rename: safe
+          - name: gallery
+            label: Gallery
+            type: image
+            options:
+              media: article_uploads
+              multiple:
+                max: 12
+              unique: true
+              extensions: [webp, jpg, jpeg, png, svg]
+              rename: safe
+      - name: claims
+        label: Structured claims and evidence references
+        component: claim
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{claim_id} — {claim_type}"
+      - name: seo
+        label: SEO
+        type: object
+        required: true
+        fields:
+          - name: title
+            label: SEO title
+            component: localized_string
+            required: true
+          - name: description
+            label: SEO description
+            component: localized_text
+            required: true
+          - name: canonical_path
+            label: Canonical path
+            type: string
+            required: true
+            readonly: true
+          - name: og_image
+            label: Sharing image
+            type: image
+            options:
+              media: article_uploads
+              extensions: [webp, jpg, jpeg, png]
+              rename: safe
+      - name: review
+        label: Review
+        component: review
+        required: true
