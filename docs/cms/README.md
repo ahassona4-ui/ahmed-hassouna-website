@@ -1,27 +1,29 @@
-# AH Website CMS — Phase 2 Content Model
+# AH Website CMS — Unified Content Model v2.0 — Candidate #003
 
-**Repository:** `ahassona4-ui/ahmed-hassouna-website`  
-**Authorized branch:** `cms-development-rc4.4`  
-**Protected main baseline:** `3b6841377276fc82c80fee2c69015e73ae497532`  
-**Phase 1 normalized branch head before Phase 2:** `558932e7eee1b55309a13e15a3bef11517850709`  
-**Runtime effect:** None
+This directory contains the single canonical schema, state classification, deterministic migration tools, lifecycle fixtures, regression tests and Platform validator interface.
 
-هذا المجلد يحتوي وثائق تصميم نموذج المحتوى والعينات غير التشغيلية فقط. لا تُستخدم هذه الملفات في بناء الموقع الحالي، ولا تضيف Jekyll أو Pages CMS أو GitHub Actions.
+## Normative sources
 
-## Contents
+- `CONTENT_MODEL_SPECIFICATION.md`
+- `CONTENT_MODEL_ADDENDUM.md`
+- `schemas/content-model.schema.json`
+- `state-classification-v2.json`
+- `STATE_CLASSIFICATION_V2.md`
+- `MIGRATION_MAP.md`
+- `V1_TO_V2_MAPPING.md`
 
-- `CONTENT_MODEL_SPECIFICATION.md` — المواصفة الحاكمة للمشروعات والمقالات.
-- `schemas/content-model.schema.json` — JSON Schema غير تشغيلي.
-- `MIGRATION_MAP.md` — خريطة ترحيل المشروعات الخمسة والمقالات الثلاثة.
-- `samples/non-runtime-samples.yml` — عينات توضيحية غير مرتبطة بالبناء.
-- `PHASE2_REPORT.md` — تقرير Phase 2.
-- `PHASE2_EVIDENCE_MANIFEST.json` — أدلة التنفيذ والتحقق.
-- `MANUAL_RECOVERY_INSTRUCTIONS_AR.md` — تعليمات الرفع اليدوي المحكوم عند تعذر الكتابة الآلية.
+## Engineering interface
 
-## Governing Rules
+- `tools/validate_content_model_v2.py`
+- `tools/migrate_content_model_v1_to_v2.py`
+- `tools/validate_v1_to_v2_migration.py`
+- `tools/simulate_pages_serializer.py`
+- `tests/test_content_model_v2.py`
+- `tests/fixtures/review-claim-lifecycle-cases.yml`
+- `VALIDATOR_INTEGRATION_CONTRACT.md`
 
-1. الاسم الحاكم: **Ahmed Hassouna / أحمد حسونة**.
-2. المسمى الحاكم: **Operations & Business Systems Consultant / مستشار نظم العمليات والأعمال**.
-3. لا تغيير للهوية، أو أسماء القدرات، أو الادعاءات، أو الأرقام أثناء تصميم النموذج.
-4. لا تُنشر أي مادة إلا بعد اكتمال العربية والإنجليزية واجتياز مراجعة الادعاءات.
-5. الملفات هنا Documentation Only ولا تُعد موافقة على بدء Phase 3.
+No competing workflow and no `assets/main.js` change are included. GitHub write, Pages CMS save, upload, PR, merge, promotion and Phase 6 remain prohibited.
+
+## Candidate #003 correction scope
+
+Corrected Engineering Candidate #003 closes publication-date, published-media and recorded-review lifecycle gaps without changing the eight runtime records, current routes, workflows or `assets/main.js`.

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ahmed-hassouna.example.invalid/schemas/content-model-v1.json",
-  "title": "AH Website CMS Content Model v1.0 — Non-Runtime Design Schema",
-  "description": "Phase 2 design schema only. Not connected to the current build.",
+  "$id": "https://ahmed-hassouna.example.invalid/schemas/content-model-v2.json",
+  "title": "AH Website Unified Content Model v2.0 — Corrected Engineering Candidate #003",
+  "description": "Canonical Option B+ contract with typed lifecycle states, conditional review metadata and governed structured claims.",
   "oneOf": [
     {
       "$ref": "#/$defs/project"
@@ -14,11 +14,11 @@
   "$defs": {
     "localizedText": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "ar",
         "en"
       ],
-      "additionalProperties": false,
       "properties": {
         "ar": {
           "type": "string",
@@ -30,38 +30,20 @@
         }
       }
     },
-    "status": {
-      "type": "string",
-      "enum": [
-        "draft",
-        "under_review",
-        "published",
-        "archived"
-      ]
-    },
-    "translationState": {
-      "type": "string",
-      "enum": [
-        "incomplete",
-        "ready_for_review",
-        "approved"
-      ]
-    },
-    "media": {
+    "mediaAsset": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "src",
-        "type",
         "decorative"
       ],
-      "additionalProperties": false,
       "properties": {
         "src": {
           "type": "string",
-          "pattern": "^assets/[a-z0-9/_-]+\\.(webp|jpg|jpeg|png|svg)$"
+          "pattern": "^/assets/[a-zA-Z0-9/_-]+\\.(?:webp|jpg|jpeg|png|svg)$"
         },
-        "type": {
-          "const": "image"
+        "decorative": {
+          "type": "boolean"
         },
         "alt": {
           "$ref": "#/$defs/localizedText"
@@ -70,17 +52,12 @@
           "$ref": "#/$defs/localizedText"
         },
         "credit": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string",
+          "minLength": 1
         },
         "order": {
           "type": "integer",
           "minimum": 1
-        },
-        "decorative": {
-          "type": "boolean"
         }
       },
       "allOf": [
@@ -90,54 +67,47 @@
               "decorative": {
                 "const": false
               }
-            }
+            },
+            "required": [
+              "decorative"
+            ]
           },
           "then": {
             "required": [
               "alt"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "decorative": {
+                "const": true
+              }
+            },
+            "required": [
+              "decorative"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "alt"
+              ]
+            }
+          }
         }
       ]
     },
-    "seo": {
-      "type": "object",
-      "required": [
-        "title",
-        "description",
-        "canonical_path"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "title": {
-          "$ref": "#/$defs/localizedText"
-        },
-        "description": {
-          "$ref": "#/$defs/localizedText"
-        },
-        "canonical_path": {
-          "type": "string",
-          "pattern": "^/(projects|articles)/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
-        },
-        "og_image": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "pattern": "^assets/[a-z0-9/_-]+\\.(webp|jpg|jpeg|png|svg)$"
-        }
-      }
-    },
     "claim": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "claim_id",
         "claim_type",
         "text",
-        "evidence_refs",
         "approval_state"
       ],
-      "additionalProperties": false,
       "properties": {
         "claim_id": {
           "type": "string",
@@ -158,11 +128,12 @@
         },
         "evidence_refs": {
           "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1
-          },
-          "uniqueItems": true
+          }
         },
         "boundary": {
           "$ref": "#/$defs/localizedText"
@@ -178,17 +149,11 @@
           ]
         },
         "approved_by": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string",
+          "minLength": 1
         },
         "approved_at": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "format": "date-time"
+          "$ref": "#/$defs/timezoneDateTime"
         }
       },
       "allOf": [
@@ -198,17 +163,75 @@
               "claim_type": {
                 "enum": [
                   "quantitative",
-                  "status",
-                  "credential"
+                  "status"
                 ]
               }
-            }
+            },
+            "required": [
+              "claim_type"
+            ]
           },
           "then": {
+            "required": [
+              "evidence_refs",
+              "boundary"
+            ]
+          }
+        },
+        {
+          "if": {
             "properties": {
-              "evidence_refs": {
-                "minItems": 1
+              "claim_type": {
+                "const": "credential"
               }
+            },
+            "required": [
+              "claim_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "approval_state": {
+                "const": "approved"
+              }
+            },
+            "required": [
+              "approval_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "approved_by",
+              "approved_at"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "approval_state": {
+                "const": "baseline_approved"
+              }
+            },
+            "required": [
+              "approval_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "approved_by"
+            ],
+            "not": {
+              "required": [
+                "approved_at"
+              ]
             }
           }
         }
@@ -216,11 +239,12 @@
     },
     "review": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "content_review_state",
-        "claim_review_state"
+        "claim_review_state",
+        "timestamp_state"
       ],
-      "additionalProperties": false,
       "properties": {
         "content_review_state": {
           "type": "string",
@@ -239,282 +263,151 @@
           ]
         },
         "reviewed_by": {
-          "type": [
-            "string",
-            "null"
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp_state": {
+          "type": "string",
+          "enum": [
+            "not_recorded",
+            "legacy_unrecorded",
+            "recorded"
           ]
         },
         "reviewed_at": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "format": "date-time"
+          "$ref": "#/$defs/timezoneDateTime"
         },
         "notes": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      }
-    },
-    "common": {
-      "type": "object",
-      "required": [
-        "schema_version",
-        "content_type",
-        "status",
-        "slug",
-        "order",
-        "owner",
-        "languages",
-        "translation_state",
-        "seo",
-        "review"
-      ],
-      "properties": {
-        "schema_version": {
-          "const": "1.0"
-        },
-        "content_type": {
-          "type": "string"
-        },
-        "status": {
-          "$ref": "#/$defs/status"
-        },
-        "slug": {
           "type": "string",
-          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
-        },
-        "order": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "owner": {
-          "const": "Ahmed Hassouna"
-        },
-        "languages": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ar",
-              "en"
-            ]
-          },
-          "contains": {
-            "const": "ar"
-          },
-          "minContains": 1,
-          "allOf": [
-            {
-              "contains": {
-                "const": "en"
-              },
-              "minContains": 1
-            }
-          ],
-          "uniqueItems": true
-        },
-        "translation_state": {
-          "$ref": "#/$defs/translationState"
-        },
-        "created_at": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "format": "date-time"
-        },
-        "updated_at": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "format": "date-time"
-        },
-        "seo": {
-          "$ref": "#/$defs/seo"
-        },
-        "claims": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/claim"
-          }
-        },
-        "review": {
-          "$ref": "#/$defs/review"
+          "minLength": 1
         }
-      }
-    },
-    "project": {
+      },
       "allOf": [
         {
-          "$ref": "#/$defs/common"
+          "if": {
+            "properties": {
+              "timestamp_state": {
+                "const": "recorded"
+              }
+            },
+            "required": [
+              "timestamp_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewed_by",
+              "reviewed_at"
+            ],
+            "properties": {
+              "content_review_state": {
+                "enum": [
+                  "approved",
+                  "rejected"
+                ]
+              },
+              "claim_review_state": {
+                "enum": [
+                  "approved",
+                  "rejected"
+                ]
+              }
+            }
+          }
         },
         {
-          "type": "object",
-          "required": [
-            "project_id",
-            "featured",
-            "title",
-            "summary",
-            "organization",
-            "period",
-            "category",
-            "status_label",
-            "built_capability",
-            "context",
-            "method",
-            "evidence",
-            "media"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "schema_version": {},
-            "content_type": {
-              "const": "project"
-            },
-            "status": {},
-            "slug": {},
-            "order": {},
-            "owner": {},
-            "languages": {},
-            "translation_state": {},
-            "created_at": {},
-            "updated_at": {},
-            "seo": {},
-            "claims": {},
-            "review": {},
-            "project_id": {
-              "type": "string",
-              "pattern": "^AH-PRJ-[0-9]{3}$"
-            },
-            "featured": {
-              "type": "boolean"
-            },
-            "title": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "summary": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "organization": {
-              "type": "string",
-              "minLength": 1
-            },
-            "period": {
-              "type": "string",
-              "minLength": 1
-            },
-            "category": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "status_label": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "built_capability": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "context": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "method": {
-              "type": "object",
-              "required": [
-                "diagnosis",
-                "design",
-                "stabilization"
-              ],
-              "additionalProperties": false,
-              "properties": {
-                "diagnosis": {
-                  "$ref": "#/$defs/localizedText"
-                },
-                "design": {
-                  "$ref": "#/$defs/localizedText"
-                },
-                "stabilization": {
-                  "$ref": "#/$defs/localizedText"
-                }
+          "if": {
+            "properties": {
+              "timestamp_state": {
+                "const": "legacy_unrecorded"
               }
             },
-            "evidence": {
-              "type": "object",
-              "required": [
-                "evidence_basis",
-                "documented_impact",
-                "claim_boundaries",
-                "transferable_value"
-              ],
-              "additionalProperties": false,
-              "properties": {
-                "evidence_basis": {
-                  "$ref": "#/$defs/localizedText"
-                },
-                "documented_impact": {
-                  "$ref": "#/$defs/localizedText"
-                },
-                "claim_boundaries": {
-                  "$ref": "#/$defs/localizedText"
-                },
-                "transferable_value": {
-                  "$ref": "#/$defs/localizedText"
-                }
+            "required": [
+              "timestamp_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewed_by"
+            ],
+            "properties": {
+              "content_review_state": {
+                "const": "approved"
+              },
+              "claim_review_state": {
+                "const": "approved"
               }
             },
-            "media": {
-              "type": "object",
+            "not": {
               "required": [
-                "thumbnail",
-                "cover",
-                "gallery"
-              ],
-              "additionalProperties": false,
-              "properties": {
-                "thumbnail": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/media"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "cover": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/media"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "gallery": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/media"
-                  },
-                  "maxItems": 12
-                }
+                "reviewed_at"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "timestamp_state": {
+                "const": "not_recorded"
               }
+            },
+            "required": [
+              "timestamp_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content_review_state": {
+                "const": "pending"
+              },
+              "claim_review_state": {
+                "const": "pending"
+              }
+            },
+            "not": {
+              "required": [
+                "reviewed_at"
+              ]
             }
           }
         }
       ]
     },
+    "seo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "description",
+        "canonical_path"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "canonical_path": {
+          "type": "string",
+          "pattern": "^/(?:projects|articles)/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+        },
+        "og_image": {
+          "type": "string",
+          "pattern": "^/assets/(?:uploads/(?:projects|articles)|articles)/[a-zA-Z0-9/_-]+\\.(?:webp|jpg|jpeg|png)$"
+        }
+      }
+    },
     "articleSection": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "section_id",
         "order",
         "heading",
         "body"
       ],
-      "additionalProperties": false,
       "properties": {
         "section_id": {
           "type": "string",
@@ -532,99 +425,1081 @@
         }
       }
     },
-    "article": {
+    "navigationTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "project_id"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/projects/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^AH-PRJ-[0-9]{3}$"
+        }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "previous",
+        "back",
+        "next"
+      ],
+      "properties": {
+        "previous": {
+          "$ref": "#/$defs/navigationTarget"
+        },
+        "next": {
+          "$ref": "#/$defs/navigationTarget"
+        },
+        "back": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "fragment"
+          ],
+          "properties": {
+            "path": {
+              "const": "/index.html"
+            },
+            "fragment": {
+              "const": "work"
+            }
+          }
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layout",
+        "permalink",
+        "body_class",
+        "nav_active",
+        "robots",
+        "og_type",
+        "styles",
+        "schema_version",
+        "content_type",
+        "slug",
+        "status",
+        "order",
+        "owner",
+        "languages",
+        "translation_state",
+        "seo",
+        "review",
+        "project_id",
+        "featured",
+        "media_state",
+        "claims_state",
+        "title",
+        "summary",
+        "card_title",
+        "organization",
+        "period",
+        "category",
+        "status_label",
+        "built_capability",
+        "context",
+        "method",
+        "evidence",
+        "navigation"
+      ],
+      "properties": {
+        "layout": {
+          "const": "project"
+        },
+        "permalink": {
+          "type": "string",
+          "pattern": "^/projects/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+        },
+        "body_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nav_active": {
+          "type": "string",
+          "enum": [
+            "work",
+            "knowledge"
+          ]
+        },
+        "robots": {
+          "type": "string",
+          "minLength": 1
+        },
+        "og_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "styles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/assets/[a-zA-Z0-9/_-]+\\.css$"
+          }
+        },
+        "schema_version": {
+          "const": "2.0"
+        },
+        "content_type": {
+          "const": "project"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "under_review",
+            "published",
+            "archived"
+          ]
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner": {
+          "const": "Ahmed Hassouna"
+        },
+        "languages": {
+          "type": "array",
+          "const": [
+            "ar",
+            "en"
+          ]
+        },
+        "translation_state": {
+          "type": "string",
+          "enum": [
+            "incomplete",
+            "ready_for_review",
+            "approved"
+          ]
+        },
+        "created_at": {
+          "$ref": "#/$defs/timezoneDateTime"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timezoneDateTime"
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "seo": {
+          "$ref": "#/$defs/seo"
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^AH-PRJ-[0-9]{3}$"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "media_state": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "none",
+            "planned",
+            "ready"
+          ]
+        },
+        "claims_state": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "none",
+            "legacy_embedded",
+            "structured"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "card_title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "status_label": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "built_capability": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "context": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "method": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "diagnosis",
+            "design",
+            "stabilization"
+          ],
+          "properties": {
+            "diagnosis": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "design": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "stabilization": {
+              "$ref": "#/$defs/localizedText"
+            }
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "evidence_basis",
+            "documented_impact",
+            "claim_boundaries",
+            "transferable_value"
+          ],
+          "properties": {
+            "evidence_basis": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "documented_impact": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "claim_boundaries": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "transferable_value": {
+              "$ref": "#/$defs/localizedText"
+            }
+          }
+        },
+        "media": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "src",
+            "decorative"
+          ],
+          "properties": {
+            "src": {
+              "type": "string",
+              "pattern": "^/assets/[a-zA-Z0-9/_-]+\\.(?:webp|jpg|jpeg|png|svg)$"
+            },
+            "decorative": {
+              "type": "boolean"
+            },
+            "alt": {
+              "$ref": "#/$defs/localizedText"
+            },
+            "thumbnail": {
+              "$ref": "#/$defs/mediaAsset"
+            },
+            "cover": {
+              "$ref": "#/$defs/mediaAsset"
+            },
+            "gallery": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "items": {
+                "$ref": "#/$defs/mediaAsset"
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "decorative": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "decorative"
+                ]
+              },
+              "then": {
+                "required": [
+                  "alt"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "decorative": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "decorative"
+                ]
+              },
+              "then": {
+                "not": {
+                  "required": [
+                    "alt"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "navigation": {
+          "$ref": "#/$defs/navigation"
+        }
+      },
       "allOf": [
         {
-          "$ref": "#/$defs/common"
+          "if": {
+            "properties": {
+              "media_state": {
+                "const": "ready"
+              }
+            },
+            "required": [
+              "media_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "media"
+            ]
+          }
         },
         {
-          "type": "object",
-          "required": [
-            "article_id",
-            "title",
-            "summary",
-            "lead",
-            "sections",
-            "author",
-            "media"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "schema_version": {},
-            "content_type": {
-              "const": "article"
+          "if": {
+            "properties": {
+              "media_state": {
+                "enum": [
+                  "not_assessed",
+                  "none",
+                  "planned"
+                ]
+              }
             },
-            "status": {},
-            "slug": {},
-            "order": {},
-            "owner": {},
-            "languages": {},
-            "translation_state": {},
-            "created_at": {},
-            "updated_at": {},
-            "seo": {},
-            "claims": {},
-            "review": {},
-            "article_id": {
-              "type": "string",
-              "pattern": "^AH-ART-[0-9]{3}$"
-            },
-            "title": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "summary": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "lead": {
-              "$ref": "#/$defs/localizedText"
-            },
-            "sections": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/articleSection"
-              },
-              "minItems": 1
-            },
-            "author": {
-              "const": "Ahmed Hassouna"
-            },
-            "published_at": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "format": "date"
-            },
-            "media": {
-              "type": "object",
+            "required": [
+              "media_state"
+            ]
+          },
+          "then": {
+            "not": {
               "required": [
-                "cover",
-                "gallery"
-              ],
-              "additionalProperties": false,
-              "properties": {
-                "cover": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/media"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "gallery": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/media"
-                  },
-                  "maxItems": 12
+                "media"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims_state": {
+                "const": "structured"
+              }
+            },
+            "required": [
+              "claims_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "claims"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims_state": {
+                "enum": [
+                  "not_assessed",
+                  "none",
+                  "legacy_embedded"
+                ]
+              }
+            },
+            "required": [
+              "claims_state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "claims"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims_state": {
+                "const": "legacy_embedded"
+              }
+            },
+            "required": [
+              "claims_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "enum": [
+                  "AH-PRJ-001",
+                  "AH-PRJ-002",
+                  "AH-PRJ-003",
+                  "AH-PRJ-004",
+                  "AH-PRJ-005"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "translation_state": {
+                "const": "approved"
+              },
+              "media_state": {
+                "const": "ready"
+              },
+              "claims_state": {
+                "not": {
+                  "const": "not_assessed"
                 }
+              },
+              "review": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "content_review_state": {
+                        "const": "approved"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "claim_review_state": {
+                        "const": "approved"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "timestamp_state": {
+                    "const": "legacy_unrecorded"
+                  }
+                },
+                "required": [
+                  "timestamp_state"
+                ]
+              }
+            },
+            "required": [
+              "review"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "enum": [
+                  "AH-PRJ-001",
+                  "AH-PRJ-002",
+                  "AH-PRJ-003",
+                  "AH-PRJ-004",
+                  "AH-PRJ-005"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "approval_state": {
+                      "const": "baseline_approved"
+                    }
+                  },
+                  "required": [
+                    "approval_state"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "claims"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "enum": [
+                  "AH-PRJ-001",
+                  "AH-PRJ-002",
+                  "AH-PRJ-003",
+                  "AH-PRJ-004",
+                  "AH-PRJ-005"
+                ]
               }
             }
           }
         }
       ]
+    },
+    "article": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layout",
+        "permalink",
+        "body_class",
+        "nav_active",
+        "robots",
+        "og_type",
+        "styles",
+        "schema_version",
+        "content_type",
+        "slug",
+        "status",
+        "order",
+        "owner",
+        "languages",
+        "translation_state",
+        "seo",
+        "review",
+        "article_id",
+        "publication_date_state",
+        "media_state",
+        "claims_state",
+        "author",
+        "category",
+        "title",
+        "summary",
+        "lead",
+        "sections"
+      ],
+      "properties": {
+        "layout": {
+          "const": "article"
+        },
+        "permalink": {
+          "type": "string",
+          "pattern": "^/articles/[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"
+        },
+        "body_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nav_active": {
+          "type": "string",
+          "enum": [
+            "work",
+            "knowledge"
+          ]
+        },
+        "robots": {
+          "type": "string",
+          "minLength": 1
+        },
+        "og_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "styles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/assets/[a-zA-Z0-9/_-]+\\.css$"
+          }
+        },
+        "schema_version": {
+          "const": "2.0"
+        },
+        "content_type": {
+          "const": "article"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "under_review",
+            "published",
+            "archived"
+          ]
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner": {
+          "const": "Ahmed Hassouna"
+        },
+        "languages": {
+          "type": "array",
+          "const": [
+            "ar",
+            "en"
+          ]
+        },
+        "translation_state": {
+          "type": "string",
+          "enum": [
+            "incomplete",
+            "ready_for_review",
+            "approved"
+          ]
+        },
+        "created_at": {
+          "$ref": "#/$defs/timezoneDateTime"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timezoneDateTime"
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "seo": {
+          "$ref": "#/$defs/seo"
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        },
+        "article_id": {
+          "type": "string",
+          "pattern": "^AH-ART-[0-9]{3}$"
+        },
+        "publication_date_state": {
+          "type": "string",
+          "enum": [
+            "unassigned",
+            "legacy_pending",
+            "recorded"
+          ]
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "media_state": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "none",
+            "planned",
+            "ready"
+          ]
+        },
+        "claims_state": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "none",
+            "structured"
+          ]
+        },
+        "author": {
+          "const": "Ahmed Hassouna"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "lead": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/articleSection"
+          }
+        },
+        "quote": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "media": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cover": {
+              "$ref": "#/$defs/mediaAsset"
+            },
+            "gallery": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 12,
+              "items": {
+                "$ref": "#/$defs/mediaAsset"
+              }
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "cover"
+              ]
+            },
+            {
+              "required": [
+                "gallery"
+              ]
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "publication_date_state": {
+                "const": "recorded"
+              }
+            },
+            "required": [
+              "publication_date_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "published_at"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication_date_state": {
+                "enum": [
+                  "unassigned",
+                  "legacy_pending"
+                ]
+              }
+            },
+            "required": [
+              "publication_date_state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "published_at"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication_date_state": {
+                "const": "unassigned"
+              }
+            },
+            "required": [
+              "publication_date_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "draft",
+                  "under_review"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication_date_state": {
+                "const": "legacy_pending"
+              }
+            },
+            "required": [
+              "publication_date_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "article_id": {
+                "enum": [
+                  "AH-ART-001",
+                  "AH-ART-002",
+                  "AH-ART-003"
+                ]
+              },
+              "status": {
+                "const": "published"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "media_state": {
+                "const": "ready"
+              }
+            },
+            "required": [
+              "media_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "media"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "media_state": {
+                "enum": [
+                  "not_assessed",
+                  "none",
+                  "planned"
+                ]
+              }
+            },
+            "required": [
+              "media_state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "media"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims_state": {
+                "const": "structured"
+              }
+            },
+            "required": [
+              "claims_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "claims"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claims_state": {
+                "enum": [
+                  "not_assessed",
+                  "none"
+                ]
+              }
+            },
+            "required": [
+              "claims_state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "claims"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "publication_date_state": {
+                "not": {
+                  "const": "unassigned"
+                }
+              },
+              "translation_state": {
+                "const": "approved"
+              },
+              "media_state": {
+                "enum": [
+                  "none",
+                  "ready"
+                ]
+              },
+              "claims_state": {
+                "not": {
+                  "const": "not_assessed"
+                }
+              },
+              "review": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "content_review_state": {
+                        "const": "approved"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "claim_review_state": {
+                        "const": "approved"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "timestamp_state": {
+                    "const": "legacy_unrecorded"
+                  }
+                },
+                "required": [
+                  "timestamp_state"
+                ]
+              }
+            },
+            "required": [
+              "review"
+            ]
+          },
+          "then": {
+            "properties": {
+              "article_id": {
+                "enum": [
+                  "AH-ART-001",
+                  "AH-ART-002",
+                  "AH-ART-003"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "claims": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "approval_state": {
+                      "const": "baseline_approved"
+                    }
+                  },
+                  "required": [
+                    "approval_state"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "claims"
+            ]
+          }
+        }
+      ]
+    },
+    "timezoneDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$"
     }
   }
 }

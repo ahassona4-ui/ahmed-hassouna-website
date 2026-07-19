@@ -11,13 +11,15 @@ styles:
 - /assets/rc4-2.css
 - /assets/rc4-3.css
 - /assets/rc4-4.css
-schema_version: '1.0'
+schema_version: '2.0'
 content_type: project
 project_id: AH-PRJ-002
 slug: warehouse-governance
 status: published
 order: 2
 featured: true
+media_state: ready
+claims_state: legacy_embedded
 owner: Ahmed Hassouna
 languages:
 - ar
@@ -70,9 +72,6 @@ evidence:
 media:
   src: /assets/projects/warehouse.svg
   decorative: true
-  alt:
-    ar: ''
-    en: ''
 navigation:
   previous:
     path: /projects/production-capacity.html
@@ -91,11 +90,10 @@ seo:
     ar: منظومة رقابة تربط المخزون والمستند وأمر التشغيل والاستهلاك المعياري والإنتاج الفعلي.
     en: A control system linking inventory, documentation, work orders, standard material consumption, and actual production.
   canonical_path: /projects/warehouse-governance.html
-  og_image: null
 review:
   content_review_state: approved
   claim_review_state: approved
   reviewed_by: AH Personal Website Operations
-  reviewed_at: null
   notes: Migrated losslessly from RC4.4 approved legacy project page.
+  timestamp_state: legacy_unrecorded
 ---

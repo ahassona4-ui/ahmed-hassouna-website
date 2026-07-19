@@ -10,14 +10,15 @@ styles:
 - /assets/visual-rc3.css
 - /assets/rc4-2.css
 - /assets/rc4-4.css
-schema_version: '1.0'
+schema_version: '2.0'
 content_type: article
 article_id: AH-ART-003
 slug: measuring-reality
 status: published
 order: 3
-published_at: null
-legacy_date_pending: true
+publication_date_state: legacy_pending
+media_state: none
+claims_state: none
 owner: Ahmed Hassouna
 author: Ahmed Hassouna
 languages:
@@ -62,10 +63,6 @@ sections:
 quote:
   ar: لا يمكن تحسين عملية لا نراها كما تحدث فعلًا.
   en: You cannot improve a process you cannot see as it actually operates.
-media:
-  cover: null
-  gallery: []
-claims: []
 seo:
   title:
     ar: لماذا أبدأ بقياس الواقع؟ | أحمد حسونة
@@ -74,11 +71,10 @@ seo:
     ar: قبل طلب السرعة، يجب فهم أين يضيع الوقت وكيف يتحرك العمل فعلًا.
     en: A short operational perspective by Ahmed Hassouna on why sustainable improvement starts with measuring the real flow, delays, and deviations before proposing solutions.
   canonical_path: /articles/measuring-reality.html
-  og_image: null
 review:
   content_review_state: approved
   claim_review_state: approved
   reviewed_by: AH Personal Website Operations
-  reviewed_at: null
   notes: Migrated losslessly from RC4.4 approved legacy article page; publication date intentionally unset.
+  timestamp_state: legacy_unrecorded
 ---

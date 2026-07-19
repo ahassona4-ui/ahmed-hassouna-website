@@ -1,142 +1,559 @@
-# NON-RUNTIME SAMPLES — DO NOT CONNECT TO BUILD
-# These examples demonstrate the Phase 2 model only.
-
 project_sample:
-  schema_version: "1.0"
+  layout: project
+  permalink: /projects/non-runtime-sample-project.html
+  body_class: project-page
+  nav_active: work
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
   content_type: project
-  project_id: AH-PRJ-001
-  slug: production-capacity
-  status: published
-  order: 1
-  featured: true
+  project_id: AH-PRJ-999
+  slug: non-runtime-sample-project
+  status: draft
+  order: 999
+  featured: false
+  media_state: none
+  claims_state: structured
   owner: Ahmed Hassouna
-  languages: [ar, en]
+  languages:
+  - ar
+  - en
   translation_state: approved
   title:
-    ar: "تحسين الطاقة الإنتاجية وكفاءة الموارد البشرية"
-    en: "Production Capacity & Workforce Productivity"
-  organization: "Expert Engineering Industries"
-  period: "2025"
-  category:
-    ar: "الأداء التشغيلي"
-    en: "Operational Performance"
-  status_label:
-    ar: "مدعوم بالأدلة"
-    en: "Evidence-Backed"
+    ar: عينة مشروع غير تشغيلية
+    en: Non-runtime Sample Project
   summary:
-    ar: "عينة توضح مكان الملخص المعتمد عند الترحيل؛ لا تستبدل النص الحالي."
-    en: "Sample placeholder showing the approved summary location; it does not replace current content."
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  card_title: Non-runtime sample
+  organization: Validation only
+  period: Not published
+  category:
+    ar: اختبار
+    en: Validation
+  status_label:
+    ar: مسودة
+    en: Draft
   built_capability:
-    ar: "يُنقل النص المعتمد حرفيًا من RC4.4."
-    en: "The approved RC4.4 text is migrated verbatim."
+    ar: قدرة اختبارية غير تشغيلية.
+    en: A non-runtime validation capability.
   context:
-    ar: "يُنقل النص المعتمد حرفيًا من RC4.4."
-    en: "The approved RC4.4 text is migrated verbatim."
+    ar: سياق اختبار.
+    en: Validation context.
   method:
     diagnosis:
-      ar: "نص RC4.4 المعتمد."
-      en: "Approved RC4.4 text."
+      ar: تشخيص اختباري.
+      en: Validation diagnosis.
     design:
-      ar: "نص RC4.4 المعتمد."
-      en: "Approved RC4.4 text."
+      ar: تصميم اختباري.
+      en: Validation design.
     stabilization:
-      ar: "نص RC4.4 المعتمد."
-      en: "Approved RC4.4 text."
+      ar: تثبيت اختباري.
+      en: Validation stabilization.
   evidence:
     evidence_basis:
-      ar: "نص RC4.4 المعتمد."
-      en: "Approved RC4.4 text."
+      ar: مرجع عينة.
+      en: Sample basis.
     documented_impact:
-      ar: "نص RC4.4 المعتمد دون إضافة أرقام."
-      en: "Approved RC4.4 text without adding figures."
+      ar: لا يوجد أثر منشور.
+      en: No published impact.
     claim_boundaries:
-      ar: "نص حدود الادعاء المعتمد."
-      en: "Approved claim-boundary text."
+      ar: لا توجد ادعاءات.
+      en: No claims are made.
     transferable_value:
-      ar: "نص RC4.4 المعتمد."
-      en: "Approved RC4.4 text."
-  media:
-    thumbnail:
-      src: assets/projects/production.svg
-      type: image
-      decorative: true
-    cover: null
-    gallery: []
-  claims:
-    - claim_id: AH-PRJ-001-CLAIM-001
-      claim_type: quantitative
-      text:
-        ar: "يُدرج النص الكمي الحالي حرفيًا عند الترحيل."
-        en: "The existing quantitative text is inserted verbatim during migration."
-      evidence_refs: ["INTERNAL-EVIDENCE-REF-REQUIRED"]
-      boundary:
-        ar: "تُحفظ حدود الإسناد الحالية."
-        en: "Current attribution boundaries are preserved."
-      approval_state: baseline_approved
-      approved_by: null
-      approved_at: null
+      ar: عينة تحقق فقط.
+      en: Validation fixture only.
+  navigation:
+    previous:
+      path: /projects/operational-knowledge.html
+      project_id: AH-PRJ-005
+    back:
+      path: /index.html
+      fragment: work
+    next:
+      path: /projects/production-capacity.html
+      project_id: AH-PRJ-001
   seo:
     title:
-      ar: "عنوان SEO معتمد عند الترحيل"
-      en: "Approved SEO title during migration"
+      ar: عينة مشروع | أحمد حسونة
+      en: Sample Project | Ahmed Hassouna
     description:
-      ar: "وصف SEO معتمد عند الترحيل."
-      en: "Approved SEO description during migration."
-    canonical_path: /projects/production-capacity/
-    og_image: null
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /projects/non-runtime-sample-project.html
   review:
-    content_review_state: approved
-    claim_review_state: approved
-    reviewed_by: null
-    reviewed_at: null
-    notes: "Non-runtime sample."
-
+    content_review_state: pending
+    claim_review_state: pending
+    timestamp_state: not_recorded
+  claims:
+  - claim_id: SAMPLE-QUANT-001
+    claim_type: quantitative
+    text:
+      ar: قيمة كمية اختبارية غير منشورة.
+      en: A non-published quantitative validation value.
+    evidence_refs:
+    - SAMPLE-EVIDENCE-001
+    boundary:
+      ar: هذه عينة تحقق محلية وليست ادعاءً منشورًا.
+      en: This is a local validation fixture and not a published claim.
+    approval_state: approved
+    approved_by: AH Personal Website Operations
+    approved_at: '2026-07-16T12:00:00+03:00'
 article_sample:
-  schema_version: "1.0"
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
   content_type: article
-  article_id: AH-ART-001
-  slug: business-logic-before-tools
-  status: published
-  order: 1
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: draft
+  order: 999
+  publication_date_state: unassigned
+  media_state: none
+  claims_state: none
   owner: Ahmed Hassouna
   author: Ahmed Hassouna
-  languages: [ar, en]
+  languages:
+  - ar
+  - en
   translation_state: approved
-  published_at: null
+  category: Validation
   title:
-    ar: "لماذا يسبق منطق العمل الأداة؟"
-    en: "Why Business Logic Must Come Before the Tool"
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
   summary:
-    ar: "يُنقل وصف المقال الحالي بعد المراجعة."
-    en: "The current article description is migrated after review."
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
   lead:
-    ar: "يُنقل النص الافتتاحي الحالي حرفيًا."
-    en: "The current lead text is migrated verbatim."
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
   sections:
-    - section_id: tool-executes-decision
-      order: 1
-      heading:
-        ar: "الأداة تنفذ القرار ولا تصنعه"
-        en: "The tool executes the decision; it does not create it"
-      body:
-        ar: "يُنقل نص RC4.4 المعتمد."
-        en: "The approved RC4.4 text is migrated."
-  media:
-    cover: null
-    gallery: []
-  claims: []
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
   seo:
     title:
-      ar: "لماذا يسبق منطق العمل الأداة؟ | أحمد حسونة"
-      en: "Why Business Logic Must Come Before the Tool | Ahmed Hassouna"
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
     description:
-      ar: "وصف عربي يعتمد قبل الترحيل التشغيلي."
-      en: "English description approved before runtime migration."
-    canonical_path: /articles/business-logic-before-tools/
-    og_image: null
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
+  review:
+    content_review_state: pending
+    claim_review_state: pending
+    timestamp_state: not_recorded
+published_article_none_sample:
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: article
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: published
+  order: 999
+  publication_date_state: recorded
+  media_state: none
+  claims_state: none
+  owner: Ahmed Hassouna
+  author: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  category: Validation
+  title:
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  lead:
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
+  sections:
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
+  seo:
+    title:
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
   review:
     content_review_state: approved
     claim_review_state: approved
-    reviewed_by: null
-    reviewed_at: null
-    notes: "Legacy published date remains intentionally null."
+    timestamp_state: recorded
+    reviewed_by: AH Personal Website Operations
+    reviewed_at: '2026-07-16T12:00:00+03:00'
+  published_at: '2026-07-16'
+published_article_ready_sample:
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: article
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: published
+  order: 999
+  publication_date_state: recorded
+  media_state: ready
+  claims_state: none
+  owner: Ahmed Hassouna
+  author: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  category: Validation
+  title:
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  lead:
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
+  sections:
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
+  seo:
+    title:
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
+  review:
+    content_review_state: approved
+    claim_review_state: approved
+    timestamp_state: recorded
+    reviewed_by: AH Personal Website Operations
+    reviewed_at: '2026-07-16T12:00:00+03:00'
+  published_at: '2026-07-16'
+  media:
+    cover:
+      src: /assets/ahmed-hassouna-portrait.webp
+      decorative: false
+      alt:
+        ar: صورة شخصية لأحمد حسونة
+        en: Portrait of Ahmed Hassouna
+      order: 1
+published_project_ready_sample:
+  layout: project
+  permalink: /projects/non-runtime-sample-project.html
+  body_class: project-page
+  nav_active: work
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: project
+  project_id: AH-PRJ-999
+  slug: non-runtime-sample-project
+  status: published
+  order: 999
+  featured: false
+  media_state: ready
+  claims_state: structured
+  owner: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  title:
+    ar: عينة مشروع غير تشغيلية
+    en: Non-runtime Sample Project
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  card_title: Non-runtime sample
+  organization: Validation only
+  period: Not published
+  category:
+    ar: اختبار
+    en: Validation
+  status_label:
+    ar: مسودة
+    en: Draft
+  built_capability:
+    ar: قدرة اختبارية غير تشغيلية.
+    en: A non-runtime validation capability.
+  context:
+    ar: سياق اختبار.
+    en: Validation context.
+  method:
+    diagnosis:
+      ar: تشخيص اختباري.
+      en: Validation diagnosis.
+    design:
+      ar: تصميم اختباري.
+      en: Validation design.
+    stabilization:
+      ar: تثبيت اختباري.
+      en: Validation stabilization.
+  evidence:
+    evidence_basis:
+      ar: مرجع عينة.
+      en: Sample basis.
+    documented_impact:
+      ar: لا يوجد أثر منشور.
+      en: No published impact.
+    claim_boundaries:
+      ar: لا توجد ادعاءات.
+      en: No claims are made.
+    transferable_value:
+      ar: عينة تحقق فقط.
+      en: Validation fixture only.
+  navigation:
+    previous:
+      path: /projects/operational-knowledge.html
+      project_id: AH-PRJ-005
+    back:
+      path: /index.html
+      fragment: work
+    next:
+      path: /projects/production-capacity.html
+      project_id: AH-PRJ-001
+  seo:
+    title:
+      ar: عينة مشروع | أحمد حسونة
+      en: Sample Project | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /projects/non-runtime-sample-project.html
+  review:
+    content_review_state: approved
+    claim_review_state: approved
+    timestamp_state: recorded
+    reviewed_by: AH Personal Website Operations
+    reviewed_at: '2026-07-16T12:00:00+03:00'
+  claims:
+  - claim_id: SAMPLE-QUANT-001
+    claim_type: quantitative
+    text:
+      ar: قيمة كمية اختبارية غير منشورة.
+      en: A non-published quantitative validation value.
+    evidence_refs:
+    - SAMPLE-EVIDENCE-001
+    boundary:
+      ar: هذه عينة تحقق محلية وليست ادعاءً منشورًا.
+      en: This is a local validation fixture and not a published claim.
+    approval_state: approved
+    approved_by: AH Personal Website Operations
+    approved_at: '2026-07-16T12:00:00+03:00'
+  media:
+    src: /assets/projects/production.svg
+    decorative: true
+approved_recorded_review_sample:
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: article
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: under_review
+  order: 999
+  publication_date_state: unassigned
+  media_state: none
+  claims_state: none
+  owner: Ahmed Hassouna
+  author: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  category: Validation
+  title:
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  lead:
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
+  sections:
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
+  seo:
+    title:
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
+  review:
+    content_review_state: approved
+    claim_review_state: approved
+    timestamp_state: recorded
+    reviewed_by: AH Personal Website Operations
+    reviewed_at: '2026-07-16T12:00:00+03:00'
+rejected_recorded_review_sample:
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: article
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: under_review
+  order: 999
+  publication_date_state: unassigned
+  media_state: none
+  claims_state: none
+  owner: Ahmed Hassouna
+  author: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  category: Validation
+  title:
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  lead:
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
+  sections:
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
+  seo:
+    title:
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
+  review:
+    content_review_state: rejected
+    claim_review_state: rejected
+    timestamp_state: recorded
+    reviewed_by: AH Personal Website Operations
+    reviewed_at: '2026-07-16T12:00:00+03:00'
+under_review_pending_sample:
+  layout: article
+  permalink: /articles/non-runtime-sample-article.html
+  body_class: visual-rc3 article-page
+  nav_active: knowledge
+  robots: noindex, nofollow, noarchive
+  og_type: article
+  styles:
+  - /assets/styles.css
+  schema_version: '2.0'
+  content_type: article
+  article_id: AH-ART-999
+  slug: non-runtime-sample-article
+  status: under_review
+  order: 999
+  publication_date_state: unassigned
+  media_state: none
+  claims_state: none
+  owner: Ahmed Hassouna
+  author: Ahmed Hassouna
+  languages:
+  - ar
+  - en
+  translation_state: approved
+  category: Validation
+  title:
+    ar: عينة مقال غير تشغيلية
+    en: Non-runtime Sample Article
+  summary:
+    ar: عينة محلية لا تنشر.
+    en: A local sample that is not published.
+  lead:
+    ar: لا يوجد تاريخ أو ادعاء مخترع.
+    en: No date or claim is invented.
+  sections:
+  - section_id: validation-section
+    order: 1
+    heading:
+      ar: قسم التحقق
+      en: Validation section
+    body:
+      ar: نص عينة.
+      en: Sample text.
+  seo:
+    title:
+      ar: عينة مقال | أحمد حسونة
+      en: Sample Article | Ahmed Hassouna
+    description:
+      ar: عينة تحقق غير تشغيلية.
+      en: A non-runtime validation sample.
+    canonical_path: /articles/non-runtime-sample-article.html
+  review:
+    content_review_state: pending
+    claim_review_state: pending
+    timestamp_state: not_recorded

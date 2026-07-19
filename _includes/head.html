@@ -18,7 +18,9 @@
 <meta content="en_US" property="og:locale:alternate"/>
 <meta content="summary" name="twitter:card"/>
 <meta content="{{ seo_title_en | escape }}" name="twitter:title"/>
-<meta content="{{ seo_description_en | escape }}" name="twitter:description"/>
+<meta content="{{ seo_description_en | escape }}" name="twitter:description"/>{% if page.seo.og_image %}
+<meta content="{{ page.seo.og_image | absolute_url }}" property="og:image"/>
+<meta content="{{ page.seo.og_image | absolute_url }}" name="twitter:image"/>{% endif %}
 <link href="{{ identity.brand.favicon | relative_url }}" rel="icon" type="image/svg+xml"/>
 <link href="{{ identity.brand.manifest | relative_url }}" rel="manifest"/>
 {% if page.seo.canonical_path %}<link href="{{ page.seo.canonical_path | absolute_url }}" rel="canonical"/>{% endif %}

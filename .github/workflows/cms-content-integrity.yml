@@ -1,0 +1,319 @@
+name: CMS Content Integrity
+
+'on':
+  push:
+    branches:
+      - cms-development-rc4.4
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cms-content-integrity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  RECOVERY_BASELINE: 262825767ee08e91e5410957686664f3ca6dde05
+  PROTECTED_MAIN_BASELINE: 3b6841377276fc82c80fee2c69015e73ae497532
+  DEVELOPMENT_BRANCH: cms-development-rc4.4
+  PLATFORM_POLICY: docs/cms/platform/CMS_PLATFORM_POLICY_V2.json
+  OPERATION_MANIFEST: docs/cms/platform/EXACT_INTEGRATED_OPERATION_MANIFEST.json
+
+jobs:
+  validate:
+    name: Validate CMS content and repository policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Fetch exact public commits without credentials
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          source_dir="${RUNNER_TEMP}/source"
+          rm -rf "${source_dir}"
+          git init "${source_dir}"
+          git -C "${source_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          head_sha="${PR_HEAD_SHA:-${GITHUB_SHA}}"
+          git -C "${source_dir}" -c protocol.version=2 fetch --no-tags origin "${head_sha}"
+          git -C "${source_dir}" checkout --detach FETCH_HEAD
+          test "$(git -C "${source_dir}" rev-parse HEAD)" = "${head_sha}"
+          if [[ "${EVENT_NAME}" == "pull_request" ]]; then
+            git -C "${source_dir}" -c protocol.version=2 fetch --no-tags origin "${PR_BASE_SHA}"
+          else
+            [[ -n "${EVENT_BEFORE}" && "${EVENT_BEFORE}" != "0000000000000000000000000000000000000000" ]] || {
+              echo "Missing nonzero push parent"; exit 1;
+            }
+            git -C "${source_dir}" -c protocol.version=2 fetch --no-tags origin "${EVENT_BEFORE}"
+          fi
+          printf 'SOURCE_DIR=%s\nHEAD_SHA=%s\n' "${source_dir}" "${head_sha}" >> "${GITHUB_ENV}"
+
+      - name: Resolve immutable trusted validation context
+        id: context
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          BOOTSTRAP_ENABLED: ${{ vars.CMS_BOOTSTRAP_ENABLED }}
+          BOOTSTRAP_APPROVED_HEAD_SHA: ${{ vars.CMS_BOOTSTRAP_APPROVED_HEAD_SHA }}
+        run: |
+          set -euo pipefail
+          if [[ "${EVENT_NAME}" == "pull_request" ]]; then
+            [[ "${GITHUB_BASE_REF}" == "main" ]] || { echo "Wrong PR base branch"; exit 1; }
+            [[ "${PR_HEAD_REF}" == "${DEVELOPMENT_BRANCH}" ]] || { echo "Wrong PR head branch"; exit 1; }
+            trust_base="${PR_BASE_SHA}"
+            diff_base="${PR_BASE_SHA}"
+            branch_context="${DEVELOPMENT_BRANCH}->main"
+            requested_mode="promotion"
+          elif [[ "${EVENT_NAME}" == "push" ]]; then
+            [[ "${GITHUB_REF}" == "refs/heads/${DEVELOPMENT_BRANCH}" ]] || { echo "Wrong push branch"; exit 1; }
+            trust_base="${EVENT_BEFORE}"
+            diff_base="${EVENT_BEFORE}"
+            branch_context="${DEVELOPMENT_BRANCH}"
+            requested_mode="routine"
+          else
+            echo "Unsupported event"; exit 1
+          fi
+
+          validation_root="${RUNNER_TEMP}/validation-root"
+          rm -rf "${validation_root}"
+          mkdir -p "${validation_root}"
+          git -C "${SOURCE_DIR}" archive "${HEAD_SHA}" | tar -x -C "${validation_root}"
+
+          if git -C "${SOURCE_DIR}" cat-file -e "${trust_base}:docs/cms/platform/validate_platform_change.py" 2>/dev/null; then
+            trusted_root="${RUNNER_TEMP}/trusted-root"
+            rm -rf "${trusted_root}"
+            mkdir -p "${trusted_root}"
+            git -C "${SOURCE_DIR}" archive "${trust_base}" \
+              docs/cms/platform \
+              docs/cms/tools \
+              docs/cms/tests \
+              docs/cms/schemas/content-model.schema.json \
+              docs/cms/state-classification-v2.json | tar -x -C "${trusted_root}"
+            cp -a "${trusted_root}/docs/cms/platform/." "${validation_root}/docs/cms/platform/"
+            cp -a "${trusted_root}/docs/cms/tools/." "${validation_root}/docs/cms/tools/"
+            cp -a "${trusted_root}/docs/cms/tests/." "${validation_root}/docs/cms/tests/"
+            cp "${trusted_root}/docs/cms/schemas/content-model.schema.json" \
+               "${validation_root}/docs/cms/schemas/content-model.schema.json"
+            cp "${trusted_root}/docs/cms/state-classification-v2.json" \
+               "${validation_root}/docs/cms/state-classification-v2.json"
+            mode="${requested_mode}"
+          else
+            [[ "${BOOTSTRAP_ENABLED}" == "true" ]] || { echo "Bootstrap is not enabled"; exit 1; }
+            [[ "${BOOTSTRAP_APPROVED_HEAD_SHA}" == "${HEAD_SHA}" ]] || {
+              echo "Head SHA is not the exact approved bootstrap SHA"; exit 1;
+            }
+            [[ "${HEAD_SHA}" != "${RECOVERY_BASELINE}" ]] || { echo "Bootstrap head did not move"; exit 1; }
+            if [[ "${EVENT_NAME}" == "pull_request" ]]; then
+              [[ "${PR_BASE_SHA}" == "${PROTECTED_MAIN_BASELINE}" ]] || {
+                echo "Unexpected protected-main bootstrap base"; exit 1;
+              }
+            fi
+            git -C "${SOURCE_DIR}" merge-base --is-ancestor "${RECOVERY_BASELINE}" "${HEAD_SHA}" || {
+              echo "Recovery baseline is not an ancestor"; exit 1;
+            }
+            diff_base="${RECOVERY_BASELINE}"
+            branch_context="${DEVELOPMENT_BRANCH}"
+            mode="bootstrap"
+          fi
+
+          logs="${RUNNER_TEMP}/validation-logs"
+          rm -rf "${logs}"
+          mkdir -p "${logs}"
+          {
+            echo "mode=${mode}"
+            echo "base=${diff_base}"
+            echo "head=${HEAD_SHA}"
+            echo "branch=${branch_context}"
+            echo "validation_root=${validation_root}"
+            echo "logs=${logs}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Set up isolated Python environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 --version
+          python3 -m venv "${RUNNER_TEMP}/cms-venv"
+          "${RUNNER_TEMP}/cms-venv/bin/python" -m pip install --disable-pip-version-check \
+            -r "${{ steps.context.outputs.validation_root }}/docs/cms/platform/requirements-platform.txt"
+
+      - name: Validate repository policy and state-aware transitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          "${RUNNER_TEMP}/cms-venv/bin/python" \
+            "${{ steps.context.outputs.validation_root }}/docs/cms/platform/validate_platform_change.py" \
+            --repo "${SOURCE_DIR}" \
+            --base "${{ steps.context.outputs.base }}" \
+            --head "${{ steps.context.outputs.head }}" \
+            --mode "${{ steps.context.outputs.mode }}" \
+            --branch "${{ steps.context.outputs.branch }}" \
+            --policy "${{ steps.context.outputs.validation_root }}/${PLATFORM_POLICY}" \
+            --manifest "${{ steps.context.outputs.validation_root }}/${OPERATION_MANIFEST}" \
+            --report-json "${{ steps.context.outputs.logs }}/platform-change-policy.json"
+
+      - name: Validate canonical Engineering v2 model
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${{ steps.context.outputs.validation_root }}"
+          if [[ "${{ steps.context.outputs.mode }}" == "bootstrap" ]]; then
+            "${RUNNER_TEMP}/cms-venv/bin/python" docs/cms/tools/validate_content_model_v2.py \
+              --root . \
+              --schema docs/cms/schemas/content-model.schema.json \
+              --classification docs/cms/state-classification-v2.json \
+              --report-json "${{ steps.context.outputs.logs }}/content-model-v2.json"
+          else
+            "${RUNNER_TEMP}/cms-venv/bin/python" docs/cms/platform/validate_runtime_tree.py \
+              --root . \
+              --schema docs/cms/schemas/content-model.schema.json \
+              --classification docs/cms/state-classification-v2.json \
+              --engineering-validator docs/cms/tools/validate_content_model_v2.py \
+              --report-json "${{ steps.context.outputs.logs }}/content-model-v2.json"
+          fi
+          "${RUNNER_TEMP}/cms-venv/bin/python" -m unittest discover \
+            -s docs/cms/tests -p 'test_content_model_v2.py' -v \
+            2>&1 | tee "${{ steps.context.outputs.logs }}/engineering-regression-tests.log"
+
+      - name: Verify exact integrated operation manifest
+        if: steps.context.outputs.mode == 'bootstrap'
+        shell: bash
+        run: |
+          set -euo pipefail
+          "${RUNNER_TEMP}/cms-venv/bin/python" \
+            "${{ steps.context.outputs.validation_root }}/docs/cms/platform/verify_integrated_operation_manifest.py" \
+            --root "${{ steps.context.outputs.validation_root }}" \
+            --manifest "${{ steps.context.outputs.validation_root }}/${OPERATION_MANIFEST}" \
+            --report-json "${{ steps.context.outputs.logs }}/integrated-manifest.json"
+
+      - name: Verify source checkout remained unchanged
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(git -C "${SOURCE_DIR}" status --porcelain=v1 --untracked-files=all)"
+          printf '%s\n' "${status}" > "${{ steps.context.outputs.logs }}/source-status.txt"
+          test -z "${status}"
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cms-content-validation-${{ github.sha }}
+          path: ${{ steps.context.outputs.logs }}
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 6
+
+  build:
+    name: Build and validate rendered output
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Fetch exact candidate and trusted base without credentials
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BOOTSTRAP_ENABLED: ${{ vars.CMS_BOOTSTRAP_ENABLED }}
+          BOOTSTRAP_APPROVED_HEAD_SHA: ${{ vars.CMS_BOOTSTRAP_APPROVED_HEAD_SHA }}
+        run: |
+          set -euo pipefail
+          source_dir="${RUNNER_TEMP}/source"
+          rm -rf "${source_dir}"
+          git init "${source_dir}"
+          git -C "${source_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          head_sha="${PR_HEAD_SHA:-${GITHUB_SHA}}"
+          trust_base="${PR_BASE_SHA:-${EVENT_BEFORE}}"
+          git -C "${source_dir}" -c protocol.version=2 fetch --no-tags origin "${head_sha}"
+          git -C "${source_dir}" checkout --detach FETCH_HEAD
+          git -C "${source_dir}" -c protocol.version=2 fetch --no-tags origin "${trust_base}"
+
+          validator="${RUNNER_TEMP}/trusted-render/validate_rendered_output.py"
+          mkdir -p "$(dirname "${validator}")"
+          if git -C "${source_dir}" cat-file -e "${trust_base}:docs/cms/platform/validate_rendered_output.py" 2>/dev/null; then
+            git -C "${source_dir}" show "${trust_base}:docs/cms/platform/validate_rendered_output.py" > "${validator}"
+          else
+            [[ "${BOOTSTRAP_ENABLED}" == "true" && "${BOOTSTRAP_APPROVED_HEAD_SHA}" == "${head_sha}" ]] || {
+              echo "Untrusted bootstrap rendered-output validator"; exit 1;
+            }
+            cp "${source_dir}/docs/cms/platform/validate_rendered_output.py" "${validator}"
+          fi
+
+          work_dir="${RUNNER_TEMP}/cms-build-workspace"
+          site_dir="${RUNNER_TEMP}/_site_content_integrity"
+          logs="${RUNNER_TEMP}/build-logs"
+          rm -rf "${work_dir}" "${site_dir}" "${logs}"
+          mkdir -p "${work_dir}" "${site_dir}" "${logs}"
+          git -C "${source_dir}" archive "${head_sha}" | tar -x -C "${work_dir}"
+          printf 'SOURCE_DIR=%s\nWORK_DIR=%s\nSITE_DIR=%s\nBUILD_LOGS=%s\nRENDER_VALIDATOR=%s\n' \
+            "${source_dir}" "${work_dir}" "${site_dir}" "${logs}" "${validator}" >> "${GITHUB_ENV}"
+
+      - name: Set up GitHub Pages-compatible Ruby
+        uses: ruby/setup-ruby@8e41b362d2589a22a44c1cfa214b3c83052c195b
+        with:
+          ruby-version: '3.3.4'
+          bundler-cache: false
+
+      - name: Install isolated build dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${WORK_DIR}"
+          bundle config set --local path "${RUNNER_TEMP}/bundle"
+          bundle install 2>&1 | tee "${BUILD_LOGS}/bundle-install.log"
+          python3 -m venv "${RUNNER_TEMP}/render-venv"
+          "${RUNNER_TEMP}/render-venv/bin/python" -m pip install --disable-pip-version-check \
+            -r "${WORK_DIR}/docs/cms/platform/requirements-platform.txt"
+
+      - name: Build Jekyll in isolated temporary workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${WORK_DIR}"
+          bundle exec jekyll build --baseurl "" --destination "${SITE_DIR}" \
+            2>&1 | tee "${BUILD_LOGS}/jekyll-build.log"
+
+      - name: Validate rendered output
+        shell: bash
+        run: |
+          set -euo pipefail
+          "${RUNNER_TEMP}/render-venv/bin/python" "${RENDER_VALIDATOR}" \
+            --source "${WORK_DIR}" \
+            --site "${SITE_DIR}" \
+            --report-json "${BUILD_LOGS}/rendered-output.json"
+
+      - name: Verify tracked source checkout remained unchanged
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(git -C "${SOURCE_DIR}" status --porcelain=v1 --untracked-files=all)"
+          printf '%s\n' "${status}" > "${BUILD_LOGS}/source-status.txt"
+          test -z "${status}"
+
+      - name: Upload isolated build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cms-rendered-output-${{ github.sha }}
+          path: |
+            ${{ env.SITE_DIR }}
+            ${{ env.BUILD_LOGS }}
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 6

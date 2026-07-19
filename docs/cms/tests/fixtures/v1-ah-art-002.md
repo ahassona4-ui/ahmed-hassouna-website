@@ -10,15 +10,14 @@ styles:
 - /assets/visual-rc3.css
 - /assets/rc4-2.css
 - /assets/rc4-4.css
-schema_version: '2.0'
+schema_version: '1.0'
 content_type: article
 article_id: AH-ART-002
 slug: erp-ownership
 status: published
 order: 2
-publication_date_state: legacy_pending
-media_state: none
-claims_state: none
+published_at: null
+legacy_date_pending: true
 owner: Ahmed Hassouna
 author: Ahmed Hassouna
 languages:
@@ -63,6 +62,10 @@ sections:
 quote:
   ar: التكامل المستدام يبدأ بملكية واضحة قبل أن يبدأ بربط الأنظمة.
   en: Sustainable integration starts with clear ownership before systems are connected.
+media:
+  cover: null
+  gallery: []
+claims: []
 seo:
   title:
     ar: لماذا تفشل مشروعات ERP عند غموض الملكية؟ | أحمد حسونة
@@ -71,10 +74,11 @@ seo:
     ar: غموض ملكية البيانات والقرار يحول التكامل إلى تكرار وتعارض.
     en: A short operational perspective by Ahmed Hassouna on why ERP integration requires clear data ownership, decision rights, and controlled boundaries.
   canonical_path: /articles/erp-ownership.html
+  og_image: null
 review:
   content_review_state: approved
   claim_review_state: approved
   reviewed_by: AH Personal Website Operations
+  reviewed_at: null
   notes: Migrated losslessly from RC4.4 approved legacy article page; publication date intentionally unset.
-  timestamp_state: legacy_unrecorded
 ---

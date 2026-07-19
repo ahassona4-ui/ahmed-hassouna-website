@@ -1,7 +1,7 @@
 ---
 layout: project
-permalink: /dev-preview/project-ah-prj-001.html
-body_class: project-page dev-preview-page
+permalink: /projects/production-capacity.html
+body_class: project-page
 nav_active: work
 robots: noindex, nofollow, noarchive
 og_type: article
@@ -11,18 +11,25 @@ styles:
 - /assets/rc4-2.css
 - /assets/rc4-3.css
 - /assets/rc4-4.css
+schema_version: '1.0'
+content_type: project
 project_id: AH-PRJ-001
+slug: production-capacity
 status: published
 order: 1
 featured: true
-media_state: ready
-claims_state: legacy_embedded
+owner: Ahmed Hassouna
+languages:
+- ar
+- en
+translation_state: approved
 title:
   ar: تحسين الطاقة الإنتاجية وكفاءة الموارد البشرية
   en: Production Capacity & Workforce Productivity
 summary:
-  ar: منظومة قياس وتشغيل تربط تدفق العمليات بالمستهدفات والإنتاجية والحوافز والمتابعة.
-  en: A measurement and operating system connecting process flow with targets, productivity, incentives, and management follow-up.
+  ar: منظومة قياس وتشغيل تربط التدفق بالمستهدفات والإنتاجية والحوافز.
+  en: An operating measurement system linking flow, targets, productivity, and incentives.
+card_title: Expert — Production Capacity
 organization: Expert Engineering Industries
 period: '2025'
 category:
@@ -63,16 +70,19 @@ evidence:
 media:
   src: /assets/projects/production.svg
   decorative: true
+  alt:
+    ar: ''
+    en: ''
 navigation:
   previous:
-    project_id: AH-PRJ-005
     path: /projects/operational-knowledge.html
+    project_id: AH-PRJ-005
   back:
     path: /index.html
     fragment: work
   next:
-    project_id: AH-PRJ-002
     path: /projects/warehouse-governance.html
+    project_id: AH-PRJ-002
 seo:
   title:
     ar: تحسين الطاقة الإنتاجية وكفاءة الموارد البشرية | أحمد حسونة
@@ -80,4 +90,12 @@ seo:
   description:
     ar: منظومة قياس وتشغيل تربط تدفق العمليات بالمستهدفات والإنتاجية والحوافز والمتابعة.
     en: A measurement and operating system connecting process flow with targets, productivity, incentives, and management follow-up.
+  canonical_path: /projects/production-capacity.html
+  og_image: null
+review:
+  content_review_state: approved
+  claim_review_state: approved
+  reviewed_by: AH Personal Website Operations
+  reviewed_at: null
+  notes: Migrated losslessly from RC4.4 approved legacy project page.
 ---

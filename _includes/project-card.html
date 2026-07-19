@@ -1,5 +1,5 @@
 {% assign project = include.item %}
 <a aria-label="فتح المشروع: {{ project.title.ar | escape }}" class="project-card project-card-link" data-aria-label-ar="فتح المشروع: {{ project.title.ar | escape }}" data-aria-label-en="Open project: {{ project.title.en | escape }}" href="{{ project.url | relative_url }}">
-{% if project.media.thumbnail %}<img alt="" aria-hidden="true" height="420" src="{{ project.media.thumbnail | relative_url }}" width="800"/>{% endif %}
+{% if project.media_state == 'ready' and project.media and project.media.thumbnail %}{% assign thumbnail = project.media.thumbnail %}<img{% if thumbnail.decorative %} alt="" aria-hidden="true"{% else %} alt="{{ thumbnail.alt.ar | escape }}" data-alt-ar="{{ thumbnail.alt.ar | escape }}" data-alt-en="{{ thumbnail.alt.en | escape }}"{% endif %} height="420" src="{{ thumbnail.src | relative_url }}" width="800"/>{% endif %}
 <div class="project-content"><span>{{ project.project_id }}</span><h3>{{ project.card_title | default: project.title.en }}</h3><p class="project-ar">{{ project.title.ar }}</p><small data-ar="{{ project.summary.ar | escape }}" data-en="{{ project.summary.en | escape }}">{{ project.summary.ar }}</small><b>{{ project.category.en }}</b><span class="project-open" data-ar="عرض تفاصيل المشروع ←" data-en="View project details →">عرض تفاصيل المشروع ←</span></div>
 </a>

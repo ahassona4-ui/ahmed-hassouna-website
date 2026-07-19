@@ -1,41 +1,34 @@
-# Content Model Addendum — Phase 2R Mandatory Corrections
+# Content Model Addendum — v2.0 Corrected Engineering Candidate #003
 
-This addendum is normative and overrides conflicting statements in `CONTENT_MODEL_SPECIFICATION.md` and non-runtime samples.
+## Normative supersession
 
-## A. Circular Project Navigation
+This addendum supersedes the v1 explicit-empty contract. The active v2 publication field is `publication_date_state`. A compatibility adapter may read the old v1 field only in isolated migration fixtures and must never write it to v2 runtime output.
 
-The approved RC4.4 behavior is circular:
+## Canonical classifications
 
-- The Previous link on the first published project points to the last published project.
-- The Next link on the last published project points to the first published project.
-- All intermediate projects link to adjacent projects according to approved published order.
-- The Back link returns to Selected Work.
-- Arabic/English state remains preserved.
+- AH-ART-001, AH-ART-002, AH-ART-003: `claims_state: none`.
+- AH-PRJ-001..005: `claims_state: legacy_embedded`.
+- All eight migrated records: `review.timestamp_state: legacy_unrecorded`, approved review states, an identified reviewer, and no stored review timestamp.
 
-For the current order:
+## Review correction cycle #002
 
-`AH-PRJ-001 → AH-PRJ-002 → AH-PRJ-003 → AH-PRJ-004 → AH-PRJ-005 → AH-PRJ-001`
+- `reviewed_by` is not globally required.
+- `notes` is optional and omitted when empty.
+- `recorded` requires reviewer and timezone-aware timestamp.
+- `legacy_unrecorded` is migration-only, requires reviewer, and prohibits timestamp.
+- `not_recorded` prohibits timestamp and is valid only while both review states are pending.
 
-The reverse Previous sequence follows the same circular set. Links are generated from the approved published order; they are not editorial free-text fields.
+## Structured-claim correction cycle #002
 
-## B. Legacy Article Date Control
+- Quantitative/status claims require evidence and bilingual boundary.
+- Credential claims require evidence.
+- Approved claims require approver and timezone-aware approval timestamp.
+- Baseline-approved claims are limited to governed migrated project evidence, require an approver, and do not fabricate a historical timestamp.
 
-Existing RC4.4 articles have no approved publication dates in the baseline. Therefore:
+## Canonical schema
 
-```yaml
-published_at: null
-legacy_date_pending: true
-order: <explicit positive integer>
-```
+`docs/cms/schemas/content-model.schema.json` is the single normative JSON Schema v2.0 source. Every distributed copy must be byte-identical and use the recorded SHA-256.
 
-Rules:
+## Cycle #003 normative lifecycle closure
 
-1. No date may be inferred from file timestamps, Git commits, upload dates, or migration dates.
-2. Legacy articles are temporarily ordered by explicit `order`.
-3. `legacy_date_pending` remains true until AH Personal Website Operations approves a documented publication date.
-4. New articles may use an approved `published_at` after the relevant workflow is implemented.
-5. The absence of a date does not authorize displaying a fabricated date.
-
-## C. Phase 3 Preview Rule
-
-The Phase 3 article dev preview uses `published_at: null`, `legacy_date_pending: true`, and explicit `order: 1`. The project preview uses the existing circular neighbors for AH-PRJ-001: Previous = AH-PRJ-005 and Next = AH-PRJ-002.
+This correction closes the remaining conditional gaps in the canonical schema. The publication, media-publication and review-decision rules in the specification are normative and are enforced by both Draft 2020-12 schema validation and the semantic validator.
