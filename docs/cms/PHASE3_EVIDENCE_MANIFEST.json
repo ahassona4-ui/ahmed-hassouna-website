@@ -1,0 +1,159 @@
+{
+  "project": "AH Website CMS Development & Content Operations",
+  "phase": "Phase 3 — Template Migration",
+  "official_status": "Not Passed — Local Jekyll Build Gate Pending",
+  "generated_at_utc": "2026-07-14T21:01:46.773438+00:00",
+  "repository": "ahassona4-ui/ahmed-hassouna-website",
+  "authorized_branch": "cms-development-rc4.4",
+  "protected_main_sha": "3b6841377276fc82c80fee2c69015e73ae497532",
+  "repository_write_attempted": false,
+  "phase4_authorized": false,
+  "mandatory_corrections": {
+    "circular_project_navigation": "implemented",
+    "invented_article_dates": "prohibited and absent",
+    "legacy_date_pending": true,
+    "legacy_article_explicit_order": 1
+  },
+  "local_build": {
+    "bundle_install": "failed — index.rubygems.org unreachable",
+    "jekyll_build": "not executed successfully — jekyll executable unavailable",
+    "generated_site_present": false
+  },
+  "static_verification": {
+    "passed": 38,
+    "failed": 0,
+    "warnings": 0
+  },
+  "scope_controls": {
+    "main_changed": false,
+    "pull_request_created": false,
+    "pages_configuration_changed": false,
+    "nojekyll_removed": false,
+    "existing_runtime_files_modified": false,
+    "css_js_media_modified": false,
+    "real_projects_collection_created": false,
+    "real_articles_collection_created": false,
+    "pages_yml_added": false,
+    "pages_cms_connected": false,
+    "github_actions_added": false
+  },
+  "upload_inventory_note": "Hashes list every upload file except this evidence manifest itself to avoid recursive self-hashing.",
+  "upload_files": [
+    {
+      "path": "Gemfile",
+      "size_bytes": 108,
+      "sha256": "dd57b83d4f936dbac7220441e8d4be76660f7bb00d4a0e08afee98e018b1add6"
+    },
+    {
+      "path": "_config.yml",
+      "size_bytes": 519,
+      "sha256": "a9c70c2e1df7d27c1c1200db523b3ca1d590f69614a7e95914183ff033320e2b"
+    },
+    {
+      "path": "_data/navigation.yml",
+      "size_bytes": 789,
+      "sha256": "72ae32ac58f4d70e92f7b5e3ab07e2afe1fc475c81d2a022dce90f87baf3e34d"
+    },
+    {
+      "path": "_data/site.yml",
+      "size_bytes": 1046,
+      "sha256": "f03dbd9776485a765d8a47b2a54415fd8f6f825d258836a97f1e6b7ce4fa9712"
+    },
+    {
+      "path": "_includes/article-card.html",
+      "size_bytes": 501,
+      "sha256": "df24a3e0ad93aebb993139bf74b079d092e7813e35092611747d044e0b628ce2"
+    },
+    {
+      "path": "_includes/footer.html",
+      "size_bytes": 780,
+      "sha256": "3b4ecf2d2c5beb7467fec4c285e4121bf3ea81d5976159bdb36e2bc38311b41b"
+    },
+    {
+      "path": "_includes/head.html",
+      "size_bytes": 2067,
+      "sha256": "35c2278592d45ae18d679d7c6fdf21eaab68753e7708431715f258549d1f171c"
+    },
+    {
+      "path": "_includes/header.html",
+      "size_bytes": 1256,
+      "sha256": "9b23bb86e76d5554a3179bea0f06a00bad12dccb5dee47e1a217c8a7d4f948ac"
+    },
+    {
+      "path": "_includes/language-switcher.html",
+      "size_bytes": 489,
+      "sha256": "be870fc38bd76f5afe5dfd5e021c1b5330f3dbf9fc0bb7b85230a6009fa938eb"
+    },
+    {
+      "path": "_includes/project-card.html",
+      "size_bytes": 984,
+      "sha256": "4e71e7f75889db342f0ea9c6b9acaf34e952653740299a84d20c95a355aa99a3"
+    },
+    {
+      "path": "_includes/project-navigation.html",
+      "size_bytes": 807,
+      "sha256": "5f312716f9ab3249bfd9bdeaaaf1204ce5fc8d6f0150e5150c4f347282ea3225"
+    },
+    {
+      "path": "_layouts/article.html",
+      "size_bytes": 2359,
+      "sha256": "c33e6f5fe6a85e542f45395e26c128150d20907c485d3507bb35d8a0e5051e9d"
+    },
+    {
+      "path": "_layouts/default.html",
+      "size_bytes": 542,
+      "sha256": "401de7b2651e3c61a22af6f939159fbf8ae83ac4128202649fe286922ed2a7c4"
+    },
+    {
+      "path": "_layouts/home.html",
+      "size_bytes": 38,
+      "sha256": "3f1d9a544de1d9db4b2c075d9eda925ba3fce08b5c56f4f8926ea201ac7e94eb"
+    },
+    {
+      "path": "_layouts/project.html",
+      "size_bytes": 5232,
+      "sha256": "7e8eb003bc9fcf30a11fd0232d72ceeb174eafcbf9c1c6641c4c5a56c9aaa74d"
+    },
+    {
+      "path": "dev-preview/article-ah-art-001.html",
+      "size_bytes": 3681,
+      "sha256": "7d71a2632be26694c5504f3c673d747808841f3aa09549103b0a7568ee8284f7"
+    },
+    {
+      "path": "dev-preview/project-ah-prj-001.html",
+      "size_bytes": 5176,
+      "sha256": "dd81c78ea57db750e32edb50c6388aa38b9e9cd6a1ca8e3292ea9517ed9ca665"
+    },
+    {
+      "path": "docs/cms/CONTENT_MODEL_ADDENDUM.md",
+      "size_bytes": 1815,
+      "sha256": "416a21f79b07f3bf86b56c3d1a9259f8ccbd2c7390d69b31dc01149d2f42c821"
+    },
+    {
+      "path": "docs/cms/PHASE2R_APPROVAL_RECORD.md",
+      "size_bytes": 1144,
+      "sha256": "08602ee1daacbd0481dc59b240ab9e247666f3f2e280e039fcefef7007a460c0"
+    },
+    {
+      "path": "docs/cms/PHASE3_BEFORE_AFTER_TREE.md",
+      "size_bytes": 1987,
+      "sha256": "458467b579e8be8bfcca2c607993c0d3bb06feaa84d28aff22c6c2c75a5f8bce"
+    },
+    {
+      "path": "docs/cms/PHASE3_LOCAL_BUILD_EVIDENCE.md",
+      "size_bytes": 2564,
+      "sha256": "8b43c52d0833bdf81fc6bda9edd7829dc6f77e0ec63e6737eda4e4d77f1c7642"
+    },
+    {
+      "path": "docs/cms/PHASE3_MANUAL_RECOVERY_INSTRUCTIONS_AR.md",
+      "size_bytes": 2154,
+      "sha256": "eff1c15509911f5784041d8c4d1385064b09098f0049f1f08a3d02c6af4a742e"
+    },
+    {
+      "path": "docs/cms/PHASE3_REPORT.md",
+      "size_bytes": 3914,
+      "sha256": "b8c1ba9a4756a3b2ba7d5381c04eb55e058fd13cbd793a9cc4146c436edcba05"
+    }
+  ],
+  "rollback": "Revert the single Phase 3 commit on cms-development-rc4.4; never modify main."
+}

@@ -1,0 +1,295 @@
+{
+  "policy_id": "AH-WEB-PHASE5E-C-PLATFORM-POLICY-002",
+  "schema_version": "2.0",
+  "source_recovery_commit": "262825767ee08e91e5410957686664f3ca6dde05",
+  "protected_main_baseline": "3b6841377276fc82c80fee2c69015e73ae497532",
+  "development_branch": "cms-development-rc4.4",
+  "protected_branch": "main",
+  "authoritative_workflow": ".github/workflows/cms-content-integrity.yml",
+  "deleted_workflow": ".github/workflows/cms-phase3-build.yml",
+  "required_check_names": [
+    "Validate CMS content and repository policy",
+    "Build and validate rendered output"
+  ],
+  "consumed_normalized_engineering_package": {
+    "filename": "06_NORMALIZED_ENGINEERING_PLATFORM_INPUT_003.zip",
+    "sha256": "58c28f66e649ee605e5750091f13549ed6d48d369b8c4e66221b7d5e9c86023c"
+  },
+  "controlled_engineering_migration_package": {
+    "filename": "01_CONTROLLED_MIGRATION_PACKAGE_CANDIDATE_003.zip",
+    "sha256": "1a072a2984686eb5368c8c1f8a55e3095f0f2a75ae24e761dbf0ba9c9b03d3c8",
+    "engineering_path_count": 42
+  },
+  "canonical_schema": {
+    "path": "docs/cms/schemas/content-model.schema.json",
+    "sha256": "4f4a540fdca498616f4b2dd9a2a05e943a16ce0624dd434113c2ff31abefcef0"
+  },
+  "classification_path": "docs/cms/state-classification-v2.json",
+  "runtime_record_ids": {
+    "articles": [
+      "AH-ART-001",
+      "AH-ART-002",
+      "AH-ART-003"
+    ],
+    "projects": [
+      "AH-PRJ-001",
+      "AH-PRJ-002",
+      "AH-PRJ-003",
+      "AH-PRJ-004",
+      "AH-PRJ-005"
+    ]
+  },
+  "routine": {
+    "allowed_content_globs": [
+      "_articles/*.md",
+      "_projects/*.md"
+    ],
+    "allowed_media_globs": [
+      "assets/uploads/articles/*",
+      "assets/uploads/projects/*"
+    ],
+    "content_operations": [
+      "M"
+    ],
+    "media_operations": [
+      "A"
+    ],
+    "paths_per_commit": 1,
+    "prohibited_exact_paths": [
+      ".pages.yml",
+      ".github/workflows/cms-content-integrity.yml",
+      ".github/workflows/cms-phase3-build.yml",
+      "docs/cms/schemas/content-model.schema.json",
+      "docs/cms/state-classification-v2.json"
+    ],
+    "prohibited_prefixes": [
+      ".github/",
+      "docs/cms/platform/",
+      "docs/cms/tools/",
+      "docs/cms/tests/",
+      "_layouts/",
+      "_includes/",
+      "_data/",
+      "assets/styles",
+      "assets/main.js"
+    ]
+  },
+  "protected_fields": {
+    "common": [
+      "schema_version",
+      "content_type",
+      "layout",
+      "permalink",
+      "slug",
+      "owner",
+      "languages",
+      "body_class",
+      "nav_active",
+      "robots",
+      "og_type",
+      "styles"
+    ],
+    "article": [
+      "article_id",
+      "author"
+    ],
+    "project": [
+      "project_id",
+      "navigation"
+    ]
+  },
+  "allowed_status_transitions": {
+    "draft": [
+      "draft",
+      "under_review"
+    ],
+    "under_review": [
+      "under_review",
+      "draft",
+      "published"
+    ],
+    "published": [
+      "published",
+      "under_review",
+      "archived"
+    ],
+    "archived": [
+      "archived",
+      "under_review"
+    ]
+  },
+  "state_transitions": {
+    "publication_date_state": {
+      "unassigned": [
+        "unassigned"
+      ],
+      "legacy_pending": [
+        "legacy_pending"
+      ],
+      "recorded": [
+        "recorded"
+      ],
+      "routine_recording_deferred": true
+    },
+    "media_state": {
+      "not_assessed": [
+        "not_assessed",
+        "none",
+        "planned",
+        "ready"
+      ],
+      "none": [
+        "none",
+        "planned",
+        "ready",
+        "not_assessed"
+      ],
+      "planned": [
+        "planned",
+        "ready",
+        "none",
+        "not_assessed"
+      ],
+      "ready": [
+        "ready",
+        "planned",
+        "none",
+        "not_assessed"
+      ]
+    },
+    "claims_state": {
+      "not_assessed": [
+        "not_assessed",
+        "none",
+        "structured"
+      ],
+      "none": [
+        "none",
+        "not_assessed",
+        "structured"
+      ],
+      "legacy_embedded": [
+        "legacy_embedded",
+        "structured"
+      ],
+      "structured": [
+        "structured",
+        "none",
+        "not_assessed"
+      ]
+    },
+    "review_timestamp_state": {
+      "not_recorded": [
+        "not_recorded",
+        "recorded"
+      ],
+      "legacy_unrecorded": [
+        "legacy_unrecorded",
+        "not_recorded"
+      ],
+      "recorded": [
+        "recorded",
+        "not_recorded"
+      ]
+    }
+  },
+  "legacy_claim_bearing_paths": [
+    "title",
+    "summary",
+    "status_label",
+    "organization",
+    "period",
+    "built_capability",
+    "context",
+    "method",
+    "evidence"
+  ],
+  "review_reopen_contract": {
+    "status": "under_review",
+    "content_review_state": "pending",
+    "claim_review_state": "pending",
+    "timestamp_state": "not_recorded",
+    "prohibited_fields": [
+      "reviewed_by",
+      "reviewed_at"
+    ]
+  },
+  "structured_conversion_contract": {
+    "claims_state": "structured",
+    "status": "under_review",
+    "review_content_state": "pending",
+    "review_claim_state": "pending",
+    "review_timestamp_state": "not_recorded",
+    "claim_approval_state": "pending",
+    "evidence_required_for": [
+      "quantitative",
+      "status",
+      "credential"
+    ],
+    "boundary_required_for": [
+      "quantitative",
+      "status"
+    ]
+  },
+  "canonical_sparse": {
+    "prohibit_null": true,
+    "prohibit_empty_string": true,
+    "prohibit_empty_array": true,
+    "prohibit_empty_object": true,
+    "preserve_false": true,
+    "preserve_zero": true
+  },
+  "media": {
+    "allowed_upload_extensions": [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".webp"
+    ],
+    "existing_reference_extensions": [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".webp",
+      ".svg"
+    ],
+    "max_bytes": 5242880,
+    "max_dimension": 4096,
+    "safe_filename_regex": "^[a-z0-9]+(?:-[a-z0-9]+)*\\.(?:png|jpg|jpeg|webp)$",
+    "allowed_reference_prefixes": [
+      "/assets/projects/",
+      "/assets/articles/",
+      "/assets/uploads/projects/",
+      "/assets/uploads/articles/"
+    ],
+    "prohibit_upload_svg": true,
+    "prohibit_external": true,
+    "prohibit_data_uri": true,
+    "prohibit_javascript_uri": true,
+    "prohibit_deletion": true
+  },
+  "bootstrap": {
+    "exact_base": "262825767ee08e91e5410957686664f3ca6dde05",
+    "single_non_merge_commit": true,
+    "exact_head_variable": "CMS_BOOTSTRAP_APPROVED_HEAD_SHA",
+    "enable_variable": "CMS_BOOTSTRAP_ENABLED",
+    "operation_manifest": "docs/cms/platform/EXACT_INTEGRATED_OPERATION_MANIFEST.json"
+  },
+  "main_ruleset": {
+    "name": "AH Main Production Protection",
+    "target_branch": "main",
+    "pull_request_required": true,
+    "required_branch_update": true,
+    "conversations_resolved": true,
+    "force_pushes_blocked": true,
+    "branch_deletion_blocked": true,
+    "bypass_list": [],
+    "pages_cms_app_bypass": false
+  },
+  "explicitly_excluded": [
+    "assets/main.js"
+  ],
+  "non_review_editorial_paths": [
+    "card_title"
+  ]
+}

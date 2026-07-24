@@ -1,0 +1,29 @@
+{% assign identity = site.data.site %}
+{% assign seo_title_ar = page.seo.title.ar | default: page.title.ar | default: identity.seo.default_title.ar %}
+{% assign seo_title_en = page.seo.title.en | default: page.title.en | default: identity.seo.default_title.en %}
+{% assign seo_description_ar = page.seo.description.ar | default: page.summary.ar | default: identity.seo.default_description.ar %}
+{% assign seo_description_en = page.seo.description.en | default: page.summary.en | default: identity.seo.default_description.en %}
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>{{ seo_title_en | escape }}</title>
+<meta content="{{ seo_description_en | escape }}" name="description"/>
+<meta content="{{ identity.seo.author | escape }}" name="author"/>
+<meta content="{{ page.robots | default: 'noindex, nofollow, noarchive' }}" name="robots"/>
+<meta content="{{ identity.seo.theme_color }}" name="theme-color"/>
+<meta content="{{ seo_title_en | escape }}" property="og:title"/>
+<meta content="{{ seo_description_en | escape }}" property="og:description"/>
+<meta content="{{ page.og_type | default: 'website' }}" property="og:type"/>
+<meta content="Ahmed Hassouna" property="og:site_name"/>
+<meta content="ar_EG" property="og:locale"/>
+<meta content="en_US" property="og:locale:alternate"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="{{ seo_title_en | escape }}" name="twitter:title"/>
+<meta content="{{ seo_description_en | escape }}" name="twitter:description"/>{% if page.seo.og_image %}
+<meta content="{{ page.seo.og_image | absolute_url }}" property="og:image"/>
+<meta content="{{ page.seo.og_image | absolute_url }}" name="twitter:image"/>{% endif %}
+<link href="{{ identity.brand.favicon | relative_url }}" rel="icon" type="image/svg+xml"/>
+<link href="{{ identity.brand.manifest | relative_url }}" rel="manifest"/>
+{% if page.seo.canonical_path %}<link href="{{ page.seo.canonical_path | absolute_url }}" rel="canonical"/>{% endif %}
+<script data-ah-bootstrap="true">document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
+{% for stylesheet in page.styles %}<link href="{{ stylesheet | relative_url }}" rel="stylesheet"/>
+{% endfor %}
