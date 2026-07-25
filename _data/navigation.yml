@@ -1,0 +1,37 @@
+primary:
+  - id: home
+    label:
+      ar: "الرئيسية"
+      en: "Home"
+    path: "/index.html"
+    fragment: "home"
+  - id: capabilities
+    label:
+      ar: "القدرات"
+      en: "Capabilities"
+    path: "/index.html"
+    fragment: "capabilities"
+  - id: thinking
+    label:
+      ar: "منهجيتي"
+      en: "Methodology"
+    path: "/index.html"
+    fragment: "thinking"
+  - id: work
+    label:
+      ar: "أعمال مختارة"
+      en: "Selected Work"
+    path: "/index.html"
+    fragment: "work"
+  - id: knowledge
+    label:
+      ar: "مركز المعرفة"
+      en: "Knowledge Center"
+    path: "/index.html"
+    fragment: "knowledge"
+  - id: contact
+    label:
+      ar: "تواصل معي"
+      en: "Contact"
+    path: "/index.html"
+    fragment: "contact"

@@ -1,0 +1,8 @@
+{% assign identity = site.data.site %}
+<header class="site-header"><div class="container nav-wrap">
+<a aria-label="الصفحة الرئيسية — أحمد حسونة" class="brand" data-aria-label-ar="الصفحة الرئيسية — أحمد حسونة" data-aria-label-en="Home — Ahmed Hassouna" href="{{ '/index.html' | relative_url }}#home">
+<img alt="AH" class="brand-logo" height="58" src="{{ identity.brand.logo | relative_url }}" width="58"/><span class="brand-text"><strong data-ar="{{ identity.name.ar | escape }}" data-en="{{ identity.name.en | escape }}">{{ identity.name.ar }}</strong><small data-ar="{{ identity.role.ar | escape }}" data-en="{{ identity.role.en | escape }}">{{ identity.role.ar }}</small></span></a>
+<nav aria-label="التنقل الرئيسي" class="nav-links" data-aria-label-ar="التنقل الرئيسي" data-aria-label-en="Primary navigation" id="primary-navigation">
+{% for item in site.data.navigation.primary %}<a{% if page.nav_active == item.id %} class="active"{% endif %} data-ar="{{ item.label.ar | escape }}" data-en="{{ item.label.en | escape }}" href="{{ item.path | relative_url }}#{{ item.fragment }}">{{ item.label.ar }}</a>{% endfor %}
+</nav>{% include language-switcher.html %}
+</div></header>

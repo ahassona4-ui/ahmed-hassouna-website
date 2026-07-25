@@ -1,0 +1,92 @@
+{
+  "schema_version": "2.0",
+  "candidate": "Corrected Engineering Candidate #003",
+  "source_recovery_commit": "262825767ee08e91e5410957686664f3ca6dde05",
+  "governance_decision": "Governance Decision #001",
+  "records": {
+    "AH-ART-001": {
+      "content_type": "article",
+      "publication_date_state": "legacy_pending",
+      "media_state": "none",
+      "claims_state": "none",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved migrated professional perspective with no evidenced publication date, no approved media, and no structured governed claim record.",
+      "baseline_approved_claims_allowed": false
+    },
+    "AH-ART-002": {
+      "content_type": "article",
+      "publication_date_state": "legacy_pending",
+      "media_state": "none",
+      "claims_state": "none",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Governance Decision #001 classifies the approved ERP ownership perspective as editorial explanatory content, not as a governed structured or legacy-embedded claim set.",
+      "baseline_approved_claims_allowed": false
+    },
+    "AH-ART-003": {
+      "content_type": "article",
+      "publication_date_state": "legacy_pending",
+      "media_state": "none",
+      "claims_state": "none",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved migrated methodology perspective with no evidenced publication date, no approved media, and no structured governed claim record.",
+      "baseline_approved_claims_allowed": false
+    },
+    "AH-PRJ-001": {
+      "content_type": "project",
+      "media_state": "ready",
+      "claims_state": "legacy_embedded",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved decorative visual exists. Narrative contains documented 44.3% and 11.8% impacts and claim boundaries without structured claim records.",
+      "baseline_approved_claims_allowed": true
+    },
+    "AH-PRJ-002": {
+      "content_type": "project",
+      "media_state": "ready",
+      "claims_state": "legacy_embedded",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved decorative visual exists. Narrative contains a documented material-loss finding and explicit claim boundaries without structured claim records.",
+      "baseline_approved_claims_allowed": true
+    },
+    "AH-PRJ-003": {
+      "content_type": "project",
+      "media_state": "ready",
+      "claims_state": "legacy_embedded",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved decorative visual exists. Narrative contains 79.6%, 0.68%, and 1.25% figures and explicit claim boundaries without structured claim records.",
+      "baseline_approved_claims_allowed": true
+    },
+    "AH-PRJ-004": {
+      "content_type": "project",
+      "media_state": "ready",
+      "claims_state": "legacy_embedded",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved decorative visual exists. Narrative contains formal Release 1 closure and no-write-back status statements with boundaries but no structured claim array.",
+      "baseline_approved_claims_allowed": true
+    },
+    "AH-PRJ-005": {
+      "content_type": "project",
+      "media_state": "ready",
+      "claims_state": "legacy_embedded",
+      "review_timestamp_state": "legacy_unrecorded",
+      "rationale": "Approved decorative visual exists. Narrative contains documented implementation scope and explicit numerical-claim boundaries without structured claim records.",
+      "baseline_approved_claims_allowed": true
+    }
+  },
+  "review_migration_allowlist": [
+    "AH-ART-001",
+    "AH-ART-002",
+    "AH-ART-003",
+    "AH-PRJ-001",
+    "AH-PRJ-002",
+    "AH-PRJ-003",
+    "AH-PRJ-004",
+    "AH-PRJ-005"
+  ],
+  "baseline_approved_claim_allowlist": [
+    "AH-PRJ-001",
+    "AH-PRJ-002",
+    "AH-PRJ-003",
+    "AH-PRJ-004",
+    "AH-PRJ-005"
+  ]
+}

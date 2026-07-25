@@ -1,0 +1,26 @@
+release: "RC4.4"
+name:
+  ar: "أحمد حسونة"
+  en: "Ahmed Hassouna"
+role:
+  ar: "مستشار نظم العمليات والأعمال"
+  en: "Operations & Business Systems Consultant"
+brand:
+  logo: "/assets/ah-monogram.svg"
+  favicon: "/assets/favicon.svg"
+  manifest: "/site.webmanifest"
+footer:
+  statement:
+    ar: "نبني الأنظمة بشكل صحيح، ثم نجعلها مستقرة."
+    en: "Build systems right, then keep them stable."
+  copyright: "© 2026 Ahmed Hassouna. All rights reserved."
+  location: "Sixth of October, Giza, Egypt"
+seo:
+  default_title:
+    ar: "أحمد حسونة | مستشار نظم العمليات والأعمال"
+    en: "Ahmed Hassouna | Operations & Business Systems Consultant"
+  default_description:
+    ar: "الموقع المهني الرسمي لأحمد حسونة، مستشار نظم العمليات والأعمال."
+    en: "The official professional website of Ahmed Hassouna, Operations & Business Systems Consultant."
+  theme_color: "#102A43"
+  author: "Ahmed Hassouna"

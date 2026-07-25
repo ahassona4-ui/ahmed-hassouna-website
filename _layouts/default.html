@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="ar">
+<head>
+{% include head.html %}
+</head>
+<body class="rtl {{ page.body_class }}" data-release="{{ site.data.site.release }}">
+<a class="skip-link" data-ar="تجاوز إلى المحتوى الرئيسي" data-en="Skip to main content" href="#main-content">تجاوز إلى المحتوى الرئيسي</a>
+{% include header.html %}
+<main id="main-content">
+{{ content }}
+</main>
+{% include footer.html %}
+<script src="{{ '/assets/main.js' | relative_url }}"></script>
+</body>
+</html>

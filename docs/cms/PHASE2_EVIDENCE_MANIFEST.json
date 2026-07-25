@@ -1,0 +1,99 @@
+{
+  "project": "AH Website CMS Development & Content Operations",
+  "phase": "Phase 2 — Content Model",
+  "official_status": "Not Passed — Repository Write Blocked",
+  "deliverables_status": "Prepared locally for controlled manual recovery",
+  "generated_at_utc": "2026-07-14T19:04:53.026829+00:00",
+  "repository": "ahassona4-ui/ahmed-hassouna-website",
+  "authorized_branch": "cms-development-rc4.4",
+  "protected_main_sha": "3b6841377276fc82c80fee2c69015e73ae497532",
+  "verified_branch_head_before_phase2": "558932e7eee1b55309a13e15a3bef11517850709",
+  "repository_write_attempts": [
+    {
+      "operation": "create_file",
+      "path": "docs/cms/README.md",
+      "branch": "cms-development-rc4.4",
+      "result": "failed",
+      "http_status": 403,
+      "error": "Resource not accessible by integration"
+    },
+    {
+      "operation": "create_blob",
+      "result": "failed",
+      "http_status": 403,
+      "error": "Resource not accessible by integration"
+    },
+    {
+      "operation": "GitHub CLI fallback",
+      "result": "unavailable",
+      "error": "gh: command not found"
+    }
+  ],
+  "post_attempt_repository_state": {
+    "main_changed": false,
+    "branch_changed_by_phase2": false,
+    "branch_ahead_of_main_by": 1,
+    "branch_diff_paths": [
+      "FILE_HASH_MANIFEST.json",
+      "PREVIEW_DEPLOYMENT_MANIFEST.json"
+    ],
+    "pull_request_created": false,
+    "pages_configuration_changed": false,
+    "runtime_files_changed": false
+  },
+  "authorized_scope_coverage": {
+    "project_schema": "completed",
+    "article_schema": "completed",
+    "bilingual_rules": "completed",
+    "status_workflow": "completed",
+    "project_navigation_and_ordering": "completed",
+    "media_gallery_seo": "completed",
+    "existing_content_migration_map": "completed",
+    "validation_rules": "completed",
+    "claim_governance": "completed",
+    "non_runtime_samples": "completed",
+    "report": "completed"
+  },
+  "deliverables": [
+    {
+      "path": "docs/cms/CONTENT_MODEL_SPECIFICATION.md",
+      "size_bytes": 14732,
+      "sha256": "10874664aef829afe1143e6c3032151d893e710377cfc82217546b4f2cc6e6ef"
+    },
+    {
+      "path": "docs/cms/MANUAL_RECOVERY_INSTRUCTIONS_AR.md",
+      "size_bytes": 2093,
+      "sha256": "adbc050fc0ac80f44dfda3df2698eb8c67f54df92d13f960ff7a8c012aafe3c8"
+    },
+    {
+      "path": "docs/cms/MIGRATION_MAP.md",
+      "size_bytes": 5232,
+      "sha256": "3b7f998913493bc052c0b6e7fdc3b5b26c6261ba0cb90f616e73392598d24c55"
+    },
+    {
+      "path": "docs/cms/PHASE2_REPORT.md",
+      "size_bytes": 4067,
+      "sha256": "28433e93a3b4097eaf5ea2a4396093d409f14ba24535549ad84f2640fbd1bfdb"
+    },
+    {
+      "path": "docs/cms/README.md",
+      "size_bytes": 1914,
+      "sha256": "44e860fe8d1534f7d63c3f6d55323eb17c137132bb8a19c2ad06070edca51d88"
+    },
+    {
+      "path": "docs/cms/samples/non-runtime-samples.yml",
+      "size_bytes": 4873,
+      "sha256": "f2e0f713fa744eed22796d5fafa756722ecf7edaff3f045d3b6f62fa1d857949"
+    },
+    {
+      "path": "docs/cms/schemas/content-model.schema.json",
+      "size_bytes": 14672,
+      "sha256": "5c7b806a7de6a100f507de29499eff6e577e2495205c7af261824be8d2a9418a"
+    }
+  ],
+  "phase3_authorized": false,
+  "rollback": {
+    "automated_attempt": "No rollback required; no write succeeded.",
+    "manual_recovery": "Revert the Phase 2 docs commit or restore cms-development-rc4.4 to 558932e7eee1b55309a13e15a3bef11517850709; never modify main."
+  }
+}

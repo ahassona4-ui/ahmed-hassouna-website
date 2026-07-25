@@ -1,0 +1,265 @@
+{
+  "candidate": "AH Website CMS Schema v2.0 — Corrected Engineering Candidate #003",
+  "generated_at_utc": "2026-07-16T20:38:06.472132+00:00",
+  "source_recovery_commit": "262825767ee08e91e5410957686664f3ca6dde05",
+  "repository_baseline": "direct recovery baseline",
+  "schema_version": "2.0",
+  "correction_cycle": "003",
+  "runtime_records": 8,
+  "business_content_changed": false,
+  "changed_paths_excluding_manifest": [
+    {
+      "path": ".pages.yml",
+      "change": "modified",
+      "source_sha256": "fea96ad95431bc90c569b0d49ed017e7e97b5f5d6627737a5f1f9ecf35a7f615",
+      "target_sha256": "975e33deb17ef95c4e423ff740939c57b85477820555d9e8fbd08d7fa19216d1"
+    },
+    {
+      "path": "_articles/ah-art-001.md",
+      "change": "modified",
+      "source_sha256": "e724406788c3de1c57bf421302f42caabfaf63b778e4485efc9c9d4b7114fbd3",
+      "target_sha256": "03677b90e95d096e136c07b99b9e7be49a83535ee1bc971c2bd07a5a0b38c064"
+    },
+    {
+      "path": "_articles/ah-art-002.md",
+      "change": "modified",
+      "source_sha256": "73899745730f0c8e892e4a34f159bd18c905dee41df7db317ebe3c7b29b789cf",
+      "target_sha256": "5193102d1ba1b516169523fb447027b6db7430ce890d20336ecabc3e22aeb0c3"
+    },
+    {
+      "path": "_articles/ah-art-003.md",
+      "change": "modified",
+      "source_sha256": "fabed9c6b46499cb5d04d22d79a5973c1684852f1bfd1bdb8fd941226e16c886",
+      "target_sha256": "85d57e10cbad22a1f728606d29dbc5c4b05ff1e9d9737921c87b3f871934a3c1"
+    },
+    {
+      "path": "_includes/article-card.html",
+      "change": "modified",
+      "source_sha256": "df24a3e0ad93aebb993139bf74b079d092e7813e35092611747d044e0b628ce2",
+      "target_sha256": "67d3d06f7b32510ed29c93d77b12202ba336fb138fdf0c06af3a0154ffebd3d4"
+    },
+    {
+      "path": "_includes/head.html",
+      "change": "modified",
+      "source_sha256": "35c2278592d45ae18d679d7c6fdf21eaab68753e7708431715f258549d1f171c",
+      "target_sha256": "278aaa28f1ffebb69cdd6ed0eb3247eeaf8ce3df20a9c45c1653e20fdb62cb35"
+    },
+    {
+      "path": "_includes/project-card.html",
+      "change": "modified",
+      "source_sha256": "4e71e7f75889db342f0ea9c6b9acaf34e952653740299a84d20c95a355aa99a3",
+      "target_sha256": "f4a6d905b3c8f3d18017b57d5d9707dd081cc7eceeca6ad4c25b97ccbc3285c5"
+    },
+    {
+      "path": "_layouts/article.html",
+      "change": "modified",
+      "source_sha256": "c33e6f5fe6a85e542f45395e26c128150d20907c485d3507bb35d8a0e5051e9d",
+      "target_sha256": "d98eeafb3aa0a66731ff17eb9667742a175b1bd6a0d074f944921fceab025016"
+    },
+    {
+      "path": "_layouts/project.html",
+      "change": "modified",
+      "source_sha256": "7e8eb003bc9fcf30a11fd0232d72ceeb174eafcbf9c1c6641c4c5a56c9aaa74d",
+      "target_sha256": "10659e8b7e14b76f2c5d9ee3d402074f1bc1ee9828d962d7fea6bbc56a207ac5"
+    },
+    {
+      "path": "_projects/ah-prj-001.md",
+      "change": "modified",
+      "source_sha256": "51a5410a345cea25e84e0a7853568027caf335da8ee4af889eabd62a71ed2bf4",
+      "target_sha256": "b4ec144a7659910b0728ffcf6e2a74c851e8abb359eb82b3ed491f3b97a4bd6b"
+    },
+    {
+      "path": "_projects/ah-prj-002.md",
+      "change": "modified",
+      "source_sha256": "cbe593e582010b1ba4357a5af730cd0679f69b711434172bbfcf8667f14aa38f",
+      "target_sha256": "51514cbb21cc020d7090461f709a51c58c3872fa9ba05f81bde2250e48ce9784"
+    },
+    {
+      "path": "_projects/ah-prj-003.md",
+      "change": "modified",
+      "source_sha256": "91ec2f0f40811a665f022c42bcfed3de748479d0d23584e57f74ecffe14ab0fb",
+      "target_sha256": "10061a51895a25fbb98b6ef589109f32089f643d2f1107b55570962428a29271"
+    },
+    {
+      "path": "_projects/ah-prj-004.md",
+      "change": "modified",
+      "source_sha256": "e000edf24b8ea235cf53d1181738a9d520248cb0d970629647b8c6b237a30fb2",
+      "target_sha256": "236fa52c2ee6e017ff1340bc6caf0357ddb12cc42b84f73ff1152980e739365d"
+    },
+    {
+      "path": "_projects/ah-prj-005.md",
+      "change": "modified",
+      "source_sha256": "4ffe459459aff078a5252d4c233b471f722ab831feab731e7c413ccd92ac775a",
+      "target_sha256": "936ece8837fc120ab5976a84836aaa74197ec3443ccd1e162260c45dc083f510"
+    },
+    {
+      "path": "dev-preview/article-ah-art-001.html",
+      "change": "modified",
+      "source_sha256": "7d71a2632be26694c5504f3c673d747808841f3aa09549103b0a7568ee8284f7",
+      "target_sha256": "a45139e73974c9805ec83c01c3d268a0c5439951bec9fb19ff2c3d8d610154d0"
+    },
+    {
+      "path": "dev-preview/project-ah-prj-001.html",
+      "change": "modified",
+      "source_sha256": "dd81c78ea57db750e32edb50c6388aa38b9e9cd6a1ca8e3292ea9517ed9ca665",
+      "target_sha256": "4dc2c849a7bdcb8880ff708d4428fe7eb2f3078cea94f80045086a6654a33a2a"
+    },
+    {
+      "path": "docs/cms/CONTENT_MODEL_ADDENDUM.md",
+      "change": "modified",
+      "source_sha256": "416a21f79b07f3bf86b56c3d1a9259f8ccbd2c7390d69b31dc01149d2f42c821",
+      "target_sha256": "e849fb451a479c7ab1b8689208a0f01df201c9cf33a0a82eefed9d32f4b68601"
+    },
+    {
+      "path": "docs/cms/CONTENT_MODEL_SPECIFICATION.md",
+      "change": "modified",
+      "source_sha256": "10874664aef829afe1143e6c3032151d893e710377cfc82217546b4f2cc6e6ef",
+      "target_sha256": "d08a69fd208a0d8c96f324458043ef7923463392a8325ebe845a7cf37e4acdf9"
+    },
+    {
+      "path": "docs/cms/MIGRATION_MAP.md",
+      "change": "modified",
+      "source_sha256": "3b7f998913493bc052c0b6e7fdc3b5b26c6261ba0cb90f616e73392598d24c55",
+      "target_sha256": "59b6139e11143dd0de8d6f5d5e292668eaf52ff41fb5430e3eefc104b47872a8"
+    },
+    {
+      "path": "docs/cms/PHASE5EAC3_CORRECTION_DELTA.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "ba4544b964bb6ffc332b7593d685a8680400b856e5a5aa24a6dbc38500d9c57b"
+    },
+    {
+      "path": "docs/cms/PHASE5EAC3_SCHEMA_V2_MIGRATION.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "abf89982a5cbabb316424e0e99f9f95001c3f4e51020d84a16ada71334ce5fce"
+    },
+    {
+      "path": "docs/cms/PHASE5EAC3_TEMPLATE_COMPATIBILITY.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "aaa8525581065b8fc0af11807bafc671e1c88194c80331d9a63c7d73f9a3382e"
+    },
+    {
+      "path": "docs/cms/README.md",
+      "change": "modified",
+      "source_sha256": "44e860fe8d1534f7d63c3f6d55323eb17c137132bb8a19c2ad06070edca51d88",
+      "target_sha256": "6d288885a14048838c0c8b61ebf84527e4e152f945e18067eb55ff375fe45b70"
+    },
+    {
+      "path": "docs/cms/STATE_CLASSIFICATION_V2.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "e9d7b64f85ee3eb92e75ca1b414d0517ba927cd36ce1a035739894c009ba48bf"
+    },
+    {
+      "path": "docs/cms/V1_TO_V2_MAPPING.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "dc56550fcc7b72073e897eefd9d325fef1e8471b1e5bef10f408d55e7f50740e"
+    },
+    {
+      "path": "docs/cms/VALIDATOR_INTEGRATION_CONTRACT.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "f4f63f34d46c2abdbaf8fe60e8321eee4b38203787e43299362561475ff89c37"
+    },
+    {
+      "path": "docs/cms/samples/non-runtime-samples.yml",
+      "change": "modified",
+      "source_sha256": "f2e0f713fa744eed22796d5fafa756722ecf7edaff3f045d3b6f62fa1d857949",
+      "target_sha256": "5f2e5a6aaaeb6fa4fbc7bcd822a1ae00cd47218622e80efc4cf49f16ee039429"
+    },
+    {
+      "path": "docs/cms/schemas/content-model.schema.json",
+      "change": "modified",
+      "source_sha256": "5c7b806a7de6a100f507de29499eff6e577e2495205c7af261824be8d2a9418a",
+      "target_sha256": "4f4a540fdca498616f4b2dd9a2a05e943a16ce0624dd434113c2ff31abefcef0"
+    },
+    {
+      "path": "docs/cms/state-classification-v2.json",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "f35c4a9f459c8df952b839abdd1a864067250c95d0764172f4be67ab822a5c7e"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/review-claim-lifecycle-cases.yml",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "4a635929349acd15c471930fd6a3495ccd5f82504f07ed2a069f9766af3932d6"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v1-ah-art-002.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "73899745730f0c8e892e4a34f159bd18c905dee41df7db317ebe3c7b29b789cf"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v1-decorative-project.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "51a5410a345cea25e84e0a7853568027caf335da8ee4af889eabd62a71ed2bf4"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v1-legacy-article.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "e724406788c3de1c57bf421302f42caabfaf63b778e4485efc9c9d4b7114fbd3"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v2-ah-art-002.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "5193102d1ba1b516169523fb447027b6db7430ce890d20336ecabc3e22aeb0c3"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v2-decorative-project.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "b4ec144a7659910b0728ffcf6e2a74c851e8abb359eb82b3ed491f3b97a4bd6b"
+    },
+    {
+      "path": "docs/cms/tests/fixtures/v2-legacy-article.md",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "03677b90e95d096e136c07b99b9e7be49a83535ee1bc971c2bd07a5a0b38c064"
+    },
+    {
+      "path": "docs/cms/tests/test_content_model_v2.py",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "098c662a7950184ac9e9f65153fb5a6163ba171b022fb04c4e471a5e3b1d4e46"
+    },
+    {
+      "path": "docs/cms/tools/migrate_content_model_v1_to_v2.py",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "d2e14b4dfc17abab6f4084274fa755defc76b8f4ae4ffd8cd67fe81eb9cfbc66"
+    },
+    {
+      "path": "docs/cms/tools/simulate_pages_serializer.py",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "759192c54f0469413b9804f2e4f1cfa167162d4ee22f62f3a4e0c02549e2d813"
+    },
+    {
+      "path": "docs/cms/tools/validate_content_model_v2.py",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "d0a6455b54611083e7fd096562d912fede451d02bb92dc4ef4f8c9424cd6fd90"
+    },
+    {
+      "path": "docs/cms/tools/validate_v1_to_v2_migration.py",
+      "change": "added",
+      "source_sha256": "",
+      "target_sha256": "5250042bd1eb4d9cff04d05d0e7886eabdcb5e7f290e686b3e45413119c3834e"
+    }
+  ],
+  "manifest_self_hash_policy": "The manifest does not embed its own target hash.",
+  "governance": {
+    "github_write": false,
+    "pages_cms_save": false,
+    "manual_upload": false,
+    "phase6": false
+  }
+}

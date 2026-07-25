@@ -1,11 +1,13 @@
 {
   "release": "RC4.4",
+  "baseline": "RC4.4 Approved Handover Baseline",
+  "source_commit": "3b6841377276fc82c80fee2c69015e73ae497532",
   "algorithm": "SHA-256",
   "file_count": 30,
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "404.html": "cfd2e8ef1bfac8fbb9414c9f0486a10058ca561ca4603887471dcf2abb51a271",
-    "PREVIEW_DEPLOYMENT_MANIFEST.json": "b9ab2594ff5b1b6d53b0c8ab968ac6c331ce88465cde78e78147cf34c0c65676",
+    "PREVIEW_DEPLOYMENT_MANIFEST.json": "ca3930a8361f1c79320d24398fba03931e0f248da016dfe95b5cb13b73de2ce7",
     "README.md": "2e2f63e97cba8cc45b484b685edbef1cce53e9b6a6dd1d2355ff0a145b52263d",
     "articles/business-logic-before-tools.html": "8c8bf38773205e88178dbc47dd2f740fb070c83ce79314493b8043340fd524cc",
     "articles/erp-ownership.html": "b79fe58dc2efb3004e595c5f15a2527b632392c81445a7a62e58e18a5e5b5e4f",
@@ -33,5 +35,7 @@
     "projects/warehouse-governance.html": "28e4a7bea8a31016015a5587b76af9fd022e184536666616d63926ddc8a9422c",
     "robots.txt": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1",
     "site.webmanifest": "4f4a8b346aafe7bcba0e82e8d620992d4a2059b0c8575997229d3656502aa0d0"
-  }
+  },
+  "generated_for": "Phase 1 — Baseline Normalization on cms-development-rc4.4",
+  "generated_at_utc": "2026-07-14T16:31:05.067042+00:00"
 }
